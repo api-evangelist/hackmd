@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/hackmd-openapi-original.json
+docs: https://hackmd.io/@docs/api-authorization
+token_management: https://hackmd.io/@docs/how-to-issue-an-api-token
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+  model: Personal API access token (bearer)
+schemes:
+- name: token
+  type: http
+  scheme: bearer
+  header: Authorization
+  format: 'Bearer <API_ACCESS_TOKEN>'
+  issuance: Created under Settings > API in the HackMD web app; shown once at creation.
+  scopes: none (token carries the full permissions of the issuing user/account)
+  sources:
+  - openapi/hackmd-openapi-original.json
