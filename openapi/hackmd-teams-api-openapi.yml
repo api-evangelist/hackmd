@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: HackMD Open History Teams API
+  version: 1.0.0
+  description: HackMD OpenAPI
+  license:
+    name: UNLICENSED
+  contact:
+    name: HackMD Team
+    email: support@hackmd.io
+servers:
+- url: /v1
+  description: API Server
+tags:
+- name: Teams
+  description: Operations related to user teams.
+paths:
+  /teams:
+    get:
+      operationId: ListTeams
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Team'
+                type: array
+      description: List the teams for the current user
+      tags:
+      - Teams
+      security:
+      - token: []
+      parameters: []
+components:
+  schemas:
+    TeamVisibilityType:
+      enum:
+      - public
+      - private
+      type: string
+    Team:
+      properties:
+        id:
+          type: string
+        ownerId:
+          type: string
+        name:
+          type: string
+        logo:
+          type: string
+        path:
+          type: string
+        description:
+          type: string
+          nullable: true
+        visibility:
+          $ref: '#/components/schemas/TeamVisibilityType'
+        upgraded:
+          type: boolean
+        createdAt:
+          type: number
+          format: double
+      required:
+      - id
+      - ownerId
+      - name
+      - logo
+      - path
+      - description
+      - visibility
+      - upgraded
+      - createdAt
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer

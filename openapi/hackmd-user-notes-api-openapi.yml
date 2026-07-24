@@ -1,0 +1,426 @@
+openapi: 3.0.0
+info:
+  title: HackMD Open History User Notes API
+  version: 1.0.0
+  description: HackMD OpenAPI
+  license:
+    name: UNLICENSED
+  contact:
+    name: HackMD Team
+    email: support@hackmd.io
+servers:
+- url: /v1
+  description: API Server
+tags:
+- name: User Notes
+  description: Operations related to a user's personal notes.
+paths:
+  /notes:
+    get:
+      operationId: ListNotes
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/NoteType'
+                type: array
+      description: List all notes for the current user
+      tags:
+      - User Notes
+      security:
+      - token: []
+      parameters: []
+    post:
+      operationId: CreateNote
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: {}
+        '207':
+          description: Multi-Status
+      description: Create a new note for the current user
+      tags:
+      - User Notes
+      security:
+      - token: []
+      parameters: []
+      requestBody:
+        description: The note content or a JSON object with note properties.
+        required: false
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - properties:
+                  origin:
+                    type: string
+                  parentFolderId:
+                    type: string
+                  permalink:
+                    type: string
+                  noteFeatures:
+                    $ref: '#/components/schemas/Partial_NoteFeatureValidPermissionRecordType_'
+                  suggestEditPermission:
+                    $ref: '#/components/schemas/SuggestEditPermissionType'
+                  commentPermission:
+                    $ref: '#/components/schemas/CommentPermissionType'
+                  writePermission:
+                    $ref: '#/components/schemas/NotePermissionRole'
+                  readPermission:
+                    $ref: '#/components/schemas/NotePermissionRole'
+                  content:
+                    type: string
+                  description:
+                    type: string
+                  tags:
+                    items:
+                      type: string
+                    type: array
+                  title:
+                    type: string
+                type: object
+              - type: string
+              description: The note content or a JSON object with note properties.
+  /notes/{noteId}:
+    get:
+      operationId: GetNote
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema: {}
+      description: Get a single note for the current user (or team note if accessible)
+      tags:
+      - User Notes
+      security:
+      - token: []
+      parameters:
+      - description: The ID of the note to retrieve.
+        in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+    delete:
+      operationId: DeleteNote
+      responses:
+        '204':
+          description: No content
+      description: Delete a note for the current user
+      tags:
+      - User Notes
+      security:
+      - token: []
+      parameters:
+      - description: The ID of the note to delete.
+        in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+    patch:
+      operationId: UpdateNote
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema: {}
+      description: Update a note's content or permissions for the current user
+      tags:
+      - User Notes
+      security:
+      - token: []
+      parameters:
+      - description: The ID of the note to update.
+        in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The properties to update on the note.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                parentFolderId:
+                  type: string
+                  nullable: true
+                permalink:
+                  type: string
+                writePermission:
+                  $ref: '#/components/schemas/NotePermissionRole'
+                readPermission:
+                  $ref: '#/components/schemas/NotePermissionRole'
+                content:
+                  type: string
+                description:
+                  type: string
+                tags:
+                  items:
+                    type: string
+                  type: array
+                title:
+                  type: string
+              type: object
+              description: The properties to update on the note.
+  /notes/{noteId}/images:
+    post:
+      operationId: UploadNoteImage
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/NoteImageUploadResponse'
+                - {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '413':
+          description: Payload Too Large
+        '415':
+          description: Unsupported Media Type
+        '422':
+          description: Validation Failed
+        '429':
+          description: Too Many Requests
+      description: Upload an image for a note.
+      tags:
+      - User Notes
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+              required:
+              - image
+components:
+  schemas:
+    NoteImageUploadResponse:
+      properties:
+        data:
+          properties:
+            link:
+              type: string
+          required:
+          - link
+          type: object
+      required:
+      - data
+      type: object
+      additionalProperties: false
+    NoteType:
+      properties:
+        folderPaths:
+          items:
+            $ref: '#/components/schemas/FolderPath'
+          type: array
+        writePermission:
+          $ref: '#/components/schemas/NotePermissionRole'
+        readPermission:
+          $ref: '#/components/schemas/NotePermissionRole'
+        shortId:
+          type: string
+        publishLink:
+          type: string
+        permalink:
+          type: string
+          nullable: true
+        teamPath:
+          type: string
+          nullable: true
+        userPath:
+          type: string
+          nullable: true
+        publishedAt:
+          type: number
+          format: double
+          nullable: true
+        publishType:
+          $ref: '#/components/schemas/NotePublishType'
+        lastChangeUser:
+          allOf:
+          - $ref: '#/components/schemas/SimpleUserProfile'
+          nullable: true
+        tagsUpdatedAt:
+          type: number
+          format: double
+          nullable: true
+        titleUpdatedAt:
+          type: number
+          format: double
+          nullable: true
+        createdAt:
+          type: number
+          format: double
+        lastChangedAt:
+          type: number
+          format: double
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        title:
+          type: string
+        id:
+          type: string
+      required:
+      - writePermission
+      - readPermission
+      - shortId
+      - publishLink
+      - permalink
+      - teamPath
+      - userPath
+      - publishedAt
+      - publishType
+      - lastChangeUser
+      - tagsUpdatedAt
+      - titleUpdatedAt
+      - createdAt
+      - lastChangedAt
+      - description
+      - tags
+      - title
+      - id
+      type: object
+    FolderPath:
+      $ref: '#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_'
+    SuggestEditPermissionType:
+      enum:
+      - disabled
+      - forbidden
+      - owners
+      - signed_in_users
+      type: string
+    Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_:
+      properties:
+        id:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+                nullable: false
+            type: object
+        name:
+          type: string
+        icon:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+                nullable: false
+            type: object
+        color:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+                nullable: false
+            type: object
+        parentId:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+                nullable: false
+            type: object
+        clientId:
+          type: string
+      required:
+      - id
+      - name
+      - icon
+      - color
+      - parentId
+      - clientId
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    SimpleUserProfile:
+      properties:
+        name:
+          type: string
+        userPath:
+          type: string
+        photo:
+          type: string
+        biography:
+          type: string
+          nullable: true
+      required:
+      - name
+      - userPath
+      - photo
+      - biography
+      type: object
+      additionalProperties: false
+    Partial_NoteFeatureValidPermissionRecordType_:
+      properties: {}
+      type: object
+      description: Make all properties in T optional
+    NotePermissionRole:
+      enum:
+      - owner
+      - signed_in
+      - guest
+      type: string
+    NotePublishType:
+      enum:
+      - edit
+      - view
+      - slide
+      - book
+      type: string
+    CommentPermissionType:
+      enum:
+      - disabled
+      - forbidden
+      - owners
+      - signed_in_users
+      - everyone
+      type: string
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer

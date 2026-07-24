@@ -1,0 +1,313 @@
+openapi: 3.0.0
+info:
+  title: HackMD Open History Team Folders API
+  version: 1.0.0
+  description: HackMD OpenAPI
+  license:
+    name: UNLICENSED
+  contact:
+    name: HackMD Team
+    email: support@hackmd.io
+servers:
+- url: /v1
+  description: API Server
+tags:
+- name: Team Folders
+  description: Operations related to folders within a team.
+paths:
+  /teams/{teampath}/folders:
+    get:
+      operationId: ListTeamFolders
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiFolder'
+                type: array
+      description: List all folders in a team workspace
+      tags:
+      - Team Folders
+      security:
+      - token: []
+      parameters:
+      - description: The path identifier for the team.
+        in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+    post:
+      operationId: CreateTeamFolder
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: {}
+      description: Create a new folder in a team workspace
+      tags:
+      - Team Folders
+      security:
+      - token: []
+      parameters:
+      - description: The path identifier for the team.
+        in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The folder properties.
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamFolderBody'
+              description: The folder properties.
+  /teams/{teampath}/folders/folder-order:
+    get:
+      operationId: GetTeamFolderOrder
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFolderOrder'
+      description: 'Get your personal folder ordering for this team workspace (parent folder id or `root` → ordered child folder ids).
+
+        Uses the same folder UUIDs as    (not internal Yjs clientIds).'
+      tags:
+      - Team Folders
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+    put:
+      operationId: UpdateTeamFolderOrder
+      responses:
+        '204':
+          description: No content
+          content:
+            application/json:
+              schema: {}
+      description: Replace your personal folder ordering for this team workspace.
+      tags:
+      - Team Folders
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFolderOrderBody'
+  /teams/{teampath}/folders/{folderId}:
+    get:
+      operationId: GetTeamFolder
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ApiFolder'
+                - {}
+      description: Get a single folder in a team workspace
+      tags:
+      - Team Folders
+      security:
+      - token: []
+      parameters:
+      - description: The path identifier for the team.
+        in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+      - description: The ID of the folder to retrieve.
+        in: path
+        name: folderId
+        required: true
+        schema:
+          type: string
+    patch:
+      operationId: UpdateTeamFolder
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema: {}
+      description: Update a folder in a team workspace
+      tags:
+      - Team Folders
+      security:
+      - token: []
+      parameters:
+      - description: The path identifier for the team.
+        in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+      - description: The ID of the folder to update.
+        in: path
+        name: folderId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The properties to update.
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamFolderBody'
+              description: The properties to update.
+    delete:
+      operationId: DeleteTeamFolder
+      responses:
+        '204':
+          description: No content
+      description: Delete a folder in a team workspace
+      tags:
+      - Team Folders
+      security:
+      - token: []
+      parameters:
+      - description: The path identifier for the team.
+        in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+      - description: The ID of the folder to delete.
+        in: path
+        name: folderId
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    FolderIconCodepoint:
+      type: string
+      example: 1F525
+      description: "Folder icon as an emoji unified codepoint string.\nExamples: `1F525` (\uD83D\uDD25), `2764-FE0F` (❤️)."
+    UpdateTeamFolderBody:
+      properties:
+        parentFolderId:
+          type: string
+          nullable: true
+        color:
+          allOf:
+          - $ref: '#/components/schemas/FolderColorHex'
+          nullable: true
+        icon:
+          allOf:
+          - $ref: '#/components/schemas/FolderIconCodepoint'
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        name:
+          $ref: '#/components/schemas/FolderName'
+      type: object
+    FolderName:
+      type: string
+      example: Engineering
+      description: Folder name.
+    FolderColorHex:
+      type: string
+      example: '#FF6B6B'
+      description: 'Folder display color in hexadecimal format.
+
+        Accepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`.'
+    ApiFolderOrder:
+      description: 'Per-user display order of folders: maps each parent folder id (or `root`) to
+
+        an ordered list of child folder ids. Keys and values use the same UUIDs as
+
+        {@link ApiFolder.id} (not Yjs clientIds stored internally in preferences).'
+      properties: {}
+      type: object
+      additionalProperties:
+        items:
+          type: string
+        type: array
+    UpdateFolderOrderBody:
+      properties:
+        order:
+          $ref: '#/components/schemas/ApiFolderOrder'
+      required:
+      - order
+      type: object
+      additionalProperties: false
+    CreateTeamFolderBody:
+      properties:
+        color:
+          $ref: '#/components/schemas/FolderColorHex'
+        icon:
+          $ref: '#/components/schemas/FolderIconCodepoint'
+        description:
+          type: string
+        parentFolderId:
+          type: string
+        name:
+          $ref: '#/components/schemas/FolderName'
+      type: object
+    ApiFolder:
+      properties:
+        id:
+          type: string
+        name:
+          $ref: '#/components/schemas/FolderName'
+        description:
+          type: string
+          nullable: true
+        icon:
+          allOf:
+          - $ref: '#/components/schemas/FolderIconCodepoint'
+          nullable: true
+        color:
+          allOf:
+          - $ref: '#/components/schemas/FolderColorHex'
+          nullable: true
+        parentFolderId:
+          type: string
+          nullable: true
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - name
+      - description
+      - icon
+      - color
+      - parentFolderId
+      - createdAt
+      - updatedAt
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer

@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  title: HackMD Open History Profile API
+  version: 1.0.0
+  description: HackMD OpenAPI
+  license:
+    name: UNLICENSED
+  contact:
+    name: HackMD Team
+    email: support@hackmd.io
+servers:
+- url: /v1
+  description: API Server
+tags:
+- name: Profile
+  description: Operations to retrieve user profile information.
+paths:
+  /me:
+    get:
+      operationId: GetCurrentUser
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      description: Get the current user's profile
+      tags:
+      - Profile
+      security:
+      - token: []
+      parameters: []
+components:
+  schemas:
+    TeamVisibilityType:
+      enum:
+      - public
+      - private
+      type: string
+    User:
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          nullable: true
+        name:
+          type: string
+        userPath:
+          type: string
+        photo:
+          type: string
+        teams:
+          items:
+            $ref: '#/components/schemas/Team'
+          type: array
+        Teams:
+          items:
+            $ref: '#/components/schemas/Team'
+          type: array
+        upgraded:
+          type: boolean
+      required:
+      - id
+      - email
+      - name
+      - userPath
+      - photo
+      - teams
+      - upgraded
+      type: object
+      additionalProperties: false
+    Team:
+      properties:
+        id:
+          type: string
+        ownerId:
+          type: string
+        name:
+          type: string
+        logo:
+          type: string
+        path:
+          type: string
+        description:
+          type: string
+          nullable: true
+        visibility:
+          $ref: '#/components/schemas/TeamVisibilityType'
+        upgraded:
+          type: boolean
+        createdAt:
+          type: number
+          format: double
+      required:
+      - id
+      - ownerId
+      - name
+      - logo
+      - path
+      - description
+      - visibility
+      - upgraded
+      - createdAt
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer

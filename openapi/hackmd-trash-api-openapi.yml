@@ -1,0 +1,182 @@
+openapi: 3.0.0
+info:
+  title: HackMD Open History Trash API
+  version: 1.0.0
+  description: HackMD OpenAPI
+  license:
+    name: UNLICENSED
+  contact:
+    name: HackMD Team
+    email: support@hackmd.io
+servers:
+- url: /v1
+  description: API Server
+tags:
+- name: Trash
+  description: Operations for listing and restoring trashed notes.
+paths:
+  /trash:
+    get:
+      operationId: ListPersonalTrash
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiTrashNote'
+                type: array
+      description: List trashed notes in your personal workspace (same data as the internal trash API).
+      tags:
+      - Trash
+      security:
+      - token: []
+      parameters: []
+  /trash/batch-restore:
+    put:
+      operationId: BatchRestore
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrashBatchOperationResponse'
+        '207':
+          description: Multi-Status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrashBatchOperationResponse'
+        '404':
+          description: Not Found
+      description: Restore multiple notes from trash in one request.
+      tags:
+      - Trash
+      security:
+      - token: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchRestoreTrashBody'
+  /trash/{noteId}/restore:
+    put:
+      operationId: RestoreNote
+      responses:
+        '204':
+          description: No content
+      description: Restore a single note from trash.
+      tags:
+      - Trash
+      security:
+      - token: []
+      parameters:
+      - description: Encoded note id of the trashed note.
+        in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+  /teams/{teampath}/trash:
+    get:
+      operationId: ListTeamTrash
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiTrashNote'
+                type: array
+      description: List trashed notes in a team workspace (team admin only; same rules as the internal API).
+      tags:
+      - Trash
+      security:
+      - token: []
+      parameters:
+      - description: The path identifier for the team.
+        in: path
+        name: teampath
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    ApiTrashNote:
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        deletedAt:
+          type: number
+          format: double
+        ownerId:
+          type: string
+        teamId:
+          type: string
+          nullable: true
+        shortId:
+          type: string
+        publishType:
+          type: string
+        permanentDeletedAt:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - id
+      - title
+      - tags
+      - deletedAt
+      - ownerId
+      - teamId
+      - shortId
+      - publishType
+      - permanentDeletedAt
+      type: object
+      additionalProperties: false
+    BatchOperationError:
+      enum:
+      - NOT_FOUND
+      - PERMISSION_DENIED
+      - INTERNAL_ERROR
+      type: string
+    TrashBatchOperationResponse:
+      properties: {}
+      additionalProperties:
+        properties:
+          reason:
+            $ref: '#/components/schemas/BatchOperationError'
+          status:
+            type: string
+            enum:
+            - success
+            - failure
+        required:
+        - status
+        type: object
+      type: object
+    BatchRestoreTrashBody:
+      properties:
+        noteIds:
+          items:
+            type: string
+          type: array
+      required:
+      - noteIds
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
