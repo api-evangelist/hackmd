@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hackmd-openapi-original.json
+format: http-status
+note: HackMD v1 returns conventional HTTP status codes; error responses are not application/problem+json
+  (RFC 9457). Titles/remediation enriched from the HackMD API policy and authorization docs.
+error_docs: https://hackmd.io/@docs/api-policy
+problems:
+- status: 400
+  title: Bad Request
+  remediation: The request was malformed or missing required parameters. Check the request body/JSON and
+    path parameters.
+  operations:
+  - UploadNoteImage
+- status: 401
+  title: Unauthorized
+  remediation: 'Missing or invalid API token. Send a valid token as an Authorization: Bearer header.'
+  operations:
+  - UploadNoteImage
+- status: 403
+  title: Forbidden
+  remediation: The token is valid but lacks permission for this note, folder or team resource.
+  operations:
+  - UploadNoteImage
+- status: 404
+  title: Not Found
+  remediation: The requested note, folder, team or resource does not exist or is not visible to the token
+    owner.
+  operations:
+  - BatchRestore
+- status: 413
+  title: Payload Too Large
+  remediation: The uploaded content or image exceeds the allowed size.
+  operations:
+  - UploadNoteImage
+- status: 415
+  title: Unsupported Media Type
+  remediation: The request Content-Type is not supported (use application/json or text/markdown where
+    accepted).
+  operations:
+  - UploadNoteImage
+- status: 422
+  title: Unprocessable Entity
+  remediation: The request was well-formed but contained semantically invalid values (e.g. invalid permission
+    enum or folder reference).
+  operations:
+  - UploadNoteImage
+- status: 429
+  title: Too Many Requests
+  remediation: API rate limit exceeded (100 calls / 5 minutes; monthly quota 2000 free / 20000 Prime).
+    Back off and retry.
+  operations:
+  - UploadNoteImage

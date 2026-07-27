@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: searched
+host: https://hackmd.io
+documents:
+- path: /.well-known/api-catalog
+  status: 200
+  file: hackmd-api-catalog.json
+  standard: RFC 9727
+  note: Linkset advertising the OpenAPI spec, Swagger UI, developer portal, CLI,
+    auth/token/policy docs, changelog, status page and terms of service.
+- path: /.well-known/security.txt
+  status: 404
+- path: /.well-known/openid-configuration
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+- path: /.well-known/security.txt
+  host: https://api.hackmd.io
+  status: 404

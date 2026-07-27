@@ -1,0 +1,44 @@
+# HackMD
+
+> HackMD is a real-time collaborative Markdown editor and knowledge base for individuals and teams. Its v1 REST API lets you manage notes, folders, teams, trash, images and view history programmatically, authenticated with a personal API access token.
+
+## API
+- [HackMD API (v1)](https://api.hackmd.io/v1): Base URL for the REST API. Bearer-token auth.
+- [OpenAPI 3.0 specification](https://api.hackmd.io/v1/docs/swagger.json): Machine-readable spec (33 operations).
+- [Swagger UI](https://api.hackmd.io/v1/docs/): Interactive API reference.
+
+## Docs
+- [Developer Portal](https://hackmd.io/@docs/developer-portal): Entry point for the HackMD API.
+- [Authentication](https://hackmd.io/@docs/api-authorization): Bearer token in the Authorization header.
+- [How to issue an API token](https://hackmd.io/@docs/how-to-issue-an-api-token): Create a token under Settings > API.
+- [API usage policy & rate limits](https://hackmd.io/@docs/api-policy): 100 calls / 5 min; 2000/mo Free, 20000/mo Prime.
+- [Attachments API](https://hackmd.io/@docs/attachments-api): Image upload/download.
+- [Changelog](https://hackmd.io/@docs/changelog): Dated API change history.
+
+## Specs & Artifacts
+- [OpenAPI (verbatim)](openapi/hackmd-openapi-original.json)
+- [Authentication profile](authentication/hackmd-authentication.yml)
+- [Conventions](conventions/hackmd-conventions.yml)
+- [Error catalog](errors/hackmd-problem-types.yml)
+- [Rate limits](rate-limits/hackmd-rate-limits.yml)
+- [Lifecycle](lifecycle/hackmd-lifecycle.yml)
+- [Data model](data-model/hackmd-data-model.yml)
+- [Packages / SDKs](packages/hackmd-packages.yml)
+- [MCP candidate tools](mcp/hackmd-mcp.yml)
+
+## Tooling
+- [Official Node.js/TypeScript client @hackmd/api](https://www.npmjs.com/package/@hackmd/api)
+- [Official CLI hackmd-cli](https://github.com/hackmdio/hackmd-cli)
+- [GitHub organization](https://github.com/hackmdio)
+
+## Operations
+- Notes: ListNotes, CreateNote, GetNote, UpdateNote, DeleteNote
+- Folders: ListFolders, CreateFolder, GetFolder, UpdateFolder, DeleteFolder, GetFolderOrder, UpdateFolderOrder
+- Teams: ListTeams, ListTeamNotes, CreateTeamNote, GetTeamNote, UpdateTeamNote, DeleteTeamNote, ListTeamFolders (+ team folder CRUD/order)
+- Trash: ListPersonalTrash, RestoreNote, BatchRestore, ListTeamTrash
+- Images: UploadNoteImage
+- User: GetCurrentUser, GetHistory
+
+## Status
+- [Status page](https://status.hackmd.io/)
+- [Status JSON](https://status.hackmd.io/api/v2/status.json)

@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hackmd-openapi-original.json
+entities:
+- name: User
+  id: id
+  fields: [id, email, name, userPath, photo, teams, upgraded]
+- name: Team
+  id: id
+  fields: [id, ownerId, name, logo, path, description, visibility, upgraded, createdAt]
+- name: Folder
+  id: id
+  fields: [id, name, description, icon, color, parentFolderId, createdAt, updatedAt]
+  scopes: [user, team]
+- name: Note
+  id: id
+  scopes: [user, team]
+  features: [content, title, tags, readPermission, writePermission, commentPermission,
+    suggestEditPermission, publishType, parentFolderId]
+- name: TrashNote
+  id: id
+  note: Soft-deleted note recoverable via trash restore endpoints
+- name: NoteImage
+  note: Image attachment uploaded to a note
+relationships:
+- from: User
+  to: Team
+  type: has_many
+  via: teams
+- from: Team
+  to: User
+  type: belongs_to
+  via: ownerId
+- from: Note
+  to: Folder
+  type: belongs_to
+  via: parentFolderId
+- from: Folder
+  to: Folder
+  type: belongs_to
+  via: parentFolderId
+- from: Folder
+  to: Team
+  type: belongs_to
+  via: teampath
+- from: Note
+  to: Team
+  type: belongs_to
+  via: teampath
+- from: NoteImage
+  to: Note
+  type: belongs_to
+  via: noteId
+enumerations:
+  NotePublishType: [edit, view, slide, book]
+  NotePermissionRole: [owner, signed_in, guest]
+  CommentPermissionType: [disabled, forbidden, owners, signed_in_users, everyone]
+  TeamVisibility: [see TeamVisibilityType in spec]

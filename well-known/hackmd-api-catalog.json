@@ -1,0 +1,77 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.hackmd.io/v1",
+      "service-desc": [
+        {
+          "href": "https://api.hackmd.io/v1/docs/swagger.json",
+          "type": "application/openapi+json",
+          "title": "HackMD API — OpenAPI 3.0 specification"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://api.hackmd.io/v1/docs/",
+          "type": "text/html",
+          "title": "HackMD API — Swagger UI"
+        },
+        {
+          "href": "https://hackmd.io/@docs/developer-portal",
+          "type": "text/html",
+          "title": "HackMD Developer Portal"
+        },
+        {
+          "href": "https://github.com/hackmdio/hackmd-cli",
+          "type": "text/html",
+          "title": "HackMD CLI — official command-line interface"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://hackmd.io/@docs/api-authorization",
+          "type": "text/html",
+          "title": "Authentication: Bearer token in Authorization header"
+        },
+        {
+          "href": "https://hackmd.io/@docs/how-to-issue-an-api-token",
+          "type": "text/html",
+          "title": "How to issue an API token"
+        },
+        {
+          "href": "https://hackmd.io/@docs/api-policy",
+          "type": "text/html",
+          "title": "API usage policy and rate limits"
+        },
+        {
+          "href": "https://hackmd.io/@docs/attachments-api",
+          "type": "text/html",
+          "title": "Attachments API"
+        },
+        {
+          "href": "https://hackmd.io/@docs/changelog",
+          "type": "text/html",
+          "title": "API changelog"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://status.hackmd.io/",
+          "type": "text/html",
+          "title": "HackMD status page"
+        },
+        {
+          "href": "https://status.hackmd.io/api/v2/status.json",
+          "type": "application/json",
+          "title": "HackMD status — Statuspage API"
+        }
+      ],
+      "terms-of-service": [
+        {
+          "href": "https://hackmd.io/s/terms",
+          "type": "text/html",
+          "title": "HackMD Terms of Service"
+        }
+      ]
+    }
+  ]
+}

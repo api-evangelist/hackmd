@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for HackMD OpenAPI
+  version: 1.0.0
+extends: openapi/hackmd-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: enriched
+    x-api-catalog: https://hackmd.io/.well-known/api-catalog
+    x-developer-portal: https://hackmd.io/@docs/developer-portal
+    x-rate-limits: rate-limits/hackmd-rate-limits.yml
+- target: $.servers
+  update:
+  - url: https://api.hackmd.io/v1
+    description: HackMD production API (absolute host; original spec uses relative /v1)
+- target: $.components.securitySchemes.token
+  update:
+    description: 'HackMD personal API access token, sent as an Authorization Bearer
+      header. Issue at Settings > API. Docs: https://hackmd.io/@docs/how-to-issue-an-api-token'

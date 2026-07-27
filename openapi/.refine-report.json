@@ -1,0 +1,28 @@
+{
+  "provider": "hackmd",
+  "sources": [
+    "hackmd-history-api-openapi.yml",
+    "hackmd-profile-api-openapi.yml",
+    "hackmd-team-folders-api-openapi.yml",
+    "hackmd-team-notes-api-openapi.yml",
+    "hackmd-teams-api-openapi.yml",
+    "hackmd-trash-api-openapi.yml",
+    "hackmd-user-folders-api-openapi.yml",
+    "hackmd-user-notes-api-openapi.yml"
+  ],
+  "outputs": [
+    "hackmd-history-api-openapi.yml",
+    "hackmd-profile-api-openapi.yml",
+    "hackmd-team-folders-api-openapi.yml",
+    "hackmd-team-notes-api-openapi.yml",
+    "hackmd-teams-api-openapi.yml",
+    "hackmd-trash-api-openapi.yml",
+    "hackmd-user-folders-api-openapi.yml",
+    "hackmd-user-notes-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

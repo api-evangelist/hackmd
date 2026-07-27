@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/hackmd-openapi-original.json
+skills:
+- file: hackmd-create-and-publish-note.md
+  name: Create and publish a HackMD note
+  api: openapi/hackmd-openapi-original.json
+  operations: [CreateNote, GetNote, UpdateNote]
+- file: hackmd-manage-team-notes.md
+  name: Manage HackMD team notes
+  api: openapi/hackmd-openapi-original.json
+  operations: [GetCurrentUser, ListTeams, ListTeamNotes, CreateTeamNote, UpdateTeamNote, DeleteTeamNote]
+- file: hackmd-organize-with-folders.md
+  name: Organize HackMD notes with folders
+  api: openapi/hackmd-openapi-original.json
+  operations: [ListFolders, CreateFolder, GetFolderOrder, UpdateFolderOrder, UpdateNote]

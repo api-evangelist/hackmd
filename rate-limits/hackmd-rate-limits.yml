@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: searched
+source: https://hackmd.io/@docs/api-policy
+docs: https://hackmd.io/@docs/api-policy
+scope: per-api-token
+rate_limits:
+- tier: Free
+  limit_count: 100
+  window: 5m
+  monthly_quota: 2000
+- tier: Prime
+  limit_count: 100
+  window: 5m
+  monthly_quota: 20000
+signaling:
+  status_code: 429
+  note: Exceeding the rolling 5-minute rate limit or the monthly quota returns HTTP
+    429. The official @hackmd/api client retries 429s with exponential backoff.
+usage_visibility: Current API usage is shown on the user's API settings page.

@@ -1,0 +1,46 @@
+generated: '2026-07-19'
+method: searched
+source: https://hackmd.io/@docs/developer-portal
+docs:
+- https://hackmd.io/@docs/api-authorization
+- https://hackmd.io/@docs/api-policy
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer <API_TOKEN>'
+  token_management: https://hackmd.io/@docs/how-to-issue-an-api-token
+  ref: authentication/hackmd-authentication.yml
+base_url: https://api.hackmd.io/v1
+versioning:
+  scheme: uri-path
+  current: v1
+content_types:
+  request:
+  - application/json
+  - text/markdown
+  response:
+  - application/json
+  note: Note create/update accept either a JSON object of properties or a raw Markdown
+    body (Markdown content-type support added 2026-03-19).
+idempotency:
+  supported: false
+  note: HackMD does not document an idempotency-key mechanism. Writes are last-write-wins
+    against the target note/folder id.
+conditional_requests:
+  etag: true
+  note: GetNote supports ETag caching; the official client sends conditional requests
+    and honors 304-style caching.
+pagination:
+  supported: false
+  note: List operations (ListNotes, ListTeamNotes, ListFolders, GetHistory) return
+    the full collection as a JSON array with no cursor/offset parameters.
+rate_limiting:
+  ref: rate-limits/hackmd-rate-limits.yml
+  status_code: 429
+error_envelope:
+  format: http-status
+  ref: errors/hackmd-problem-types.yml
+  note: Conventional HTTP status codes; not RFC 9457 problem+json.
+identifiers:
+  note_id: URL-safe note id / permalink
+  team: referenced by teampath (team URL slug)
+  folder_id: string id, nestable via parentFolderId

@@ -1,0 +1,171 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/hackmd-openapi-original.json
+note: No official HackMD MCP server found as of this pass. Candidate tool list derived one-per-operation
+  from the HackMD v1 OpenAPI; auth is a bearer API token.
+server:
+  name: hackmd
+  transport: http
+  auth: bearer-token
+tools:
+- name: list_notes
+  description: List the authenticated user's notes
+  source_operation: openapi/hackmd-openapi-original.json#ListNotes
+  method: GET
+  path: /v1/notes
+- name: create_note
+  description: Create a new note (Markdown content or JSON properties)
+  source_operation: openapi/hackmd-openapi-original.json#CreateNote
+  method: POST
+  path: /v1/notes
+- name: get_note
+  description: Get a single note by id
+  source_operation: openapi/hackmd-openapi-original.json#GetNote
+  method: GET
+  path: /v1/notes/{noteId}
+- name: delete_note
+  description: Delete a note by id
+  source_operation: openapi/hackmd-openapi-original.json#DeleteNote
+  method: DELETE
+  path: /v1/notes/{noteId}
+- name: update_note
+  description: Update a note's content, title, tags or permissions
+  source_operation: openapi/hackmd-openapi-original.json#UpdateNote
+  method: PATCH
+  path: /v1/notes/{noteId}
+- name: list_folders
+  description: List the user's folders
+  source_operation: openapi/hackmd-openapi-original.json#ListFolders
+  method: GET
+  path: /v1/folders
+- name: create_folder
+  description: Create a folder
+  source_operation: openapi/hackmd-openapi-original.json#CreateFolder
+  method: POST
+  path: /v1/folders
+- name: get_folder_order
+  description: Get the user's folder ordering
+  source_operation: openapi/hackmd-openapi-original.json#GetFolderOrder
+  method: GET
+  path: /v1/folders/folder-order
+- name: update_folder_order
+  description: Update the user's folder ordering
+  source_operation: openapi/hackmd-openapi-original.json#UpdateFolderOrder
+  method: PUT
+  path: /v1/folders/folder-order
+- name: get_folder
+  description: Get a folder by id
+  source_operation: openapi/hackmd-openapi-original.json#GetFolder
+  method: GET
+  path: /v1/folders/{folderId}
+- name: update_folder
+  description: Update a folder
+  source_operation: openapi/hackmd-openapi-original.json#UpdateFolder
+  method: PATCH
+  path: /v1/folders/{folderId}
+- name: delete_folder
+  description: Delete a folder
+  source_operation: openapi/hackmd-openapi-original.json#DeleteFolder
+  method: DELETE
+  path: /v1/folders/{folderId}
+- name: list_personal_trash
+  description: List notes in the user's trash
+  source_operation: openapi/hackmd-openapi-original.json#ListPersonalTrash
+  method: GET
+  path: /v1/trash
+- name: batch_restore
+  description: Restore multiple notes from trash
+  source_operation: openapi/hackmd-openapi-original.json#BatchRestore
+  method: PUT
+  path: /v1/trash/batch-restore
+- name: restore_note
+  description: Restore a single note from trash
+  source_operation: openapi/hackmd-openapi-original.json#RestoreNote
+  method: PUT
+  path: /v1/trash/{noteId}/restore
+- name: list_team_trash
+  description: List a team's trashed notes
+  source_operation: openapi/hackmd-openapi-original.json#ListTeamTrash
+  method: GET
+  path: /v1/teams/{teampath}/trash
+- name: list_teams
+  description: List teams the user belongs to
+  source_operation: openapi/hackmd-openapi-original.json#ListTeams
+  method: GET
+  path: /v1/teams
+- name: list_team_notes
+  description: List a team's notes
+  source_operation: openapi/hackmd-openapi-original.json#ListTeamNotes
+  method: GET
+  path: /v1/teams/{teampath}/notes
+- name: create_team_note
+  description: Create a note in a team
+  source_operation: openapi/hackmd-openapi-original.json#CreateTeamNote
+  method: POST
+  path: /v1/teams/{teampath}/notes
+- name: get_team_note
+  description: Get a team note by id
+  source_operation: openapi/hackmd-openapi-original.json#GetTeamNote
+  method: GET
+  path: /v1/teams/{teampath}/notes/{noteId}
+- name: update_team_note
+  description: Update a team note
+  source_operation: openapi/hackmd-openapi-original.json#UpdateTeamNote
+  method: PATCH
+  path: /v1/teams/{teampath}/notes/{noteId}
+- name: delete_team_note
+  description: Delete a team note
+  source_operation: openapi/hackmd-openapi-original.json#DeleteTeamNote
+  method: DELETE
+  path: /v1/teams/{teampath}/notes/{noteId}
+- name: list_team_folders
+  description: List a team's folders
+  source_operation: openapi/hackmd-openapi-original.json#ListTeamFolders
+  method: GET
+  path: /v1/teams/{teampath}/folders
+- name: create_team_folder
+  description: Create a team folder
+  source_operation: openapi/hackmd-openapi-original.json#CreateTeamFolder
+  method: POST
+  path: /v1/teams/{teampath}/folders
+- name: get_team_folder_order
+  description: Get a team's folder ordering
+  source_operation: openapi/hackmd-openapi-original.json#GetTeamFolderOrder
+  method: GET
+  path: /v1/teams/{teampath}/folders/folder-order
+- name: update_team_folder_order
+  description: Update a team's folder ordering
+  source_operation: openapi/hackmd-openapi-original.json#UpdateTeamFolderOrder
+  method: PUT
+  path: /v1/teams/{teampath}/folders/folder-order
+- name: get_team_folder
+  description: Get a team folder by id
+  source_operation: openapi/hackmd-openapi-original.json#GetTeamFolder
+  method: GET
+  path: /v1/teams/{teampath}/folders/{folderId}
+- name: update_team_folder
+  description: Update a team folder
+  source_operation: openapi/hackmd-openapi-original.json#UpdateTeamFolder
+  method: PATCH
+  path: /v1/teams/{teampath}/folders/{folderId}
+- name: delete_team_folder
+  description: Delete a team folder
+  source_operation: openapi/hackmd-openapi-original.json#DeleteTeamFolder
+  method: DELETE
+  path: /v1/teams/{teampath}/folders/{folderId}
+- name: upload_note_image
+  description: Upload an image attachment to a note
+  source_operation: openapi/hackmd-openapi-original.json#UploadNoteImage
+  method: POST
+  path: /v1/notes/{noteId}/images
+- name: get_current_user
+  description: Get the authenticated user profile
+  source_operation: openapi/hackmd-openapi-original.json#GetCurrentUser
+  method: GET
+  path: /v1/me
+- name: get_history
+  description: Get the user's recently viewed note history
+  source_operation: openapi/hackmd-openapi-original.json#GetHistory
+  method: GET
+  path: /v1/history

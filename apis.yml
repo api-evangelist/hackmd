@@ -1,7 +1,31 @@
 aid: hackmd
 name: HackMD
-description: HackMD is a company surfaced as a portfolio company of techstars and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  HackMD is a real-time collaborative Markdown editor and knowledge base for
+  individuals and teams. Multiple people can co-edit a Markdown document live,
+  organize notes into folders and team workspaces, and publish them as web pages,
+  slide decks or books. HackMD exposes a v1 REST API at api.hackmd.io that lets
+  developers programmatically create, read, update and delete personal and team
+  notes, manage folders and folder ordering, upload image attachments, restore
+  notes from trash, and read the current user profile and view history. The API
+  authenticates with a personal access token sent as an HTTP bearer credential,
+  is described by a published OpenAPI 3.0 specification and Swagger UI, ships an
+  official Node.js/TypeScript client (@hackmd/api) and command-line interface,
+  and advertises its full developer surface through an RFC 9727 api-catalog.
+  HackMD is a Techstars-backed company.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://hackmd.io/favicon.png
 url: https://raw.githubusercontent.com/api-evangelist/hackmd/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,15 +35,231 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Markdown
+- Collaboration
+- Documentation
+- Note Taking
+- Knowledge Base
+- Productivity
+- Content
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: hackmd:hackmd-history-api
+  name: HackMD History API
+  description: Operations related to user's note history.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-history-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-profile-api
+  name: HackMD Profile API
+  description: Operations to retrieve user profile information.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-profile-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-team-folders-api
+  name: HackMD Team Folders API
+  description: Operations related to folders within a team.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Team Folders
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-team-folders-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-team-notes-api
+  name: HackMD Team Notes API
+  description: Operations related to notes within a team.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Team Notes
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-team-notes-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-teams-api
+  name: HackMD Teams API
+  description: Operations related to user teams.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-teams-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-trash-api
+  name: HackMD Trash API
+  description: Operations for listing and restoring trashed notes.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Trash
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-trash-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-user-folders-api
+  name: HackMD User Folders API
+  description: Operations related to a user's personal folders.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - User Folders
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-user-folders-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-user-notes-api
+  name: HackMD User Notes API
+  description: Operations related to a user's personal notes.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - User Notes
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-user-notes-api-openapi.yml
+  - type: APIReference
+    url: https://api.hackmd.io/v1/docs/
+  - type: Documentation
+    url: https://hackmd.io/@docs/developer-portal
+  - type: Authentication
+    url: authentication/hackmd-authentication.yml
+  - type: RateLimits
+    url: rate-limits/hackmd-rate-limits.yml
 common:
 - type: Website
   url: https://hackmd.io/
+- type: DeveloperPortal
+  url: https://hackmd.io/@docs/developer-portal
+- type: Documentation
+  url: https://hackmd.io/@docs/developer-portal
+- type: APIReference
+  url: https://api.hackmd.io/v1/docs/
+- type: GettingStarted
+  url: https://hackmd.io/@docs/how-to-issue-an-api-token
+- type: GitHubOrganization
+  url: https://github.com/hackmdio
+- type: Blog
+  url: https://hackmd.io/blog
+- type: Pricing
+  url: https://hackmd.io/pricing
+- type: SignUp
+  url: https://hackmd.io/login
+- type: TermsOfService
+  url: https://hackmd.io/s/terms
+- type: PrivacyPolicy
+  url: https://hackmd.io/s/privacy
+- type: StatusPage
+  url: https://status.hackmd.io/
+- type: ChangeLog
+  url: changelog/hackmd-changelog.yml
+- type: Authentication
+  url: authentication/hackmd-authentication.yml
+- type: OpenAPI
+  url: openapi/hackmd-openapi-original.json
+- type: Overlay
+  url: overlays/hackmd-openapi-overlay.yaml
+- type: Packages
+  url: packages/hackmd-packages.yml
+- type: SDKs
+  url: packages/hackmd-packages.yml
+- type: CLI
+  url: cli/hackmd-cli.yml
+- type: MCPServer
+  url: mcp/hackmd-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/hackmd-llms.txt
+- type: WellKnown
+  url: well-known/hackmd-well-known.yml
+- type: APICatalog
+  url: well-known/hackmd-api-catalog.json
+- type: Conventions
+  url: conventions/hackmd-conventions.yml
+- type: ErrorCatalog
+  url: errors/hackmd-problem-types.yml
+- type: RateLimits
+  url: rate-limits/hackmd-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/hackmd-lifecycle.yml
+- type: DataModel
+  url: data-model/hackmd-data-model.yml
+- type: Conformance
+  url: conformance/hackmd-conformance.yml
+- type: DomainSecurity
+  url: security/hackmd-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

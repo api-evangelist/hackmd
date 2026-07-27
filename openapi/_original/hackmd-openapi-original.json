@@ -1,0 +1,2179 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "examples": {},
+    "headers": {},
+    "parameters": {},
+    "requestBodies": {},
+    "responses": {},
+    "schemas": {
+      "SimpleUserProfile": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "userPath": {
+            "type": "string"
+          },
+          "photo": {
+            "type": "string"
+          },
+          "biography": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name",
+          "userPath",
+          "photo",
+          "biography"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "NotePublishType": {
+        "enum": [
+          "edit",
+          "view",
+          "slide",
+          "book"
+        ],
+        "type": "string"
+      },
+      "NotePermissionRole": {
+        "enum": [
+          "owner",
+          "signed_in",
+          "guest"
+        ],
+        "type": "string"
+      },
+      "Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_": {
+        "properties": {
+          "id": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "undefined": {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ],
+                    "nullable": false
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "icon": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "undefined": {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ],
+                    "nullable": false
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          },
+          "color": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "undefined": {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ],
+                    "nullable": false
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          },
+          "parentId": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "undefined": {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ],
+                    "nullable": false
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          },
+          "clientId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "icon",
+          "color",
+          "parentId",
+          "clientId"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "FolderPath": {
+        "$ref": "#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_"
+      },
+      "NoteType": {
+        "properties": {
+          "folderPaths": {
+            "items": {
+              "$ref": "#/components/schemas/FolderPath"
+            },
+            "type": "array"
+          },
+          "writePermission": {
+            "$ref": "#/components/schemas/NotePermissionRole"
+          },
+          "readPermission": {
+            "$ref": "#/components/schemas/NotePermissionRole"
+          },
+          "shortId": {
+            "type": "string"
+          },
+          "publishLink": {
+            "type": "string"
+          },
+          "permalink": {
+            "type": "string",
+            "nullable": true
+          },
+          "teamPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "userPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishedAt": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "publishType": {
+            "$ref": "#/components/schemas/NotePublishType"
+          },
+          "lastChangeUser": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SimpleUserProfile"
+              }
+            ],
+            "nullable": true
+          },
+          "tagsUpdatedAt": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "titleUpdatedAt": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "number",
+            "format": "double"
+          },
+          "lastChangedAt": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "writePermission",
+          "readPermission",
+          "shortId",
+          "publishLink",
+          "permalink",
+          "teamPath",
+          "userPath",
+          "publishedAt",
+          "publishType",
+          "lastChangeUser",
+          "tagsUpdatedAt",
+          "titleUpdatedAt",
+          "createdAt",
+          "lastChangedAt",
+          "description",
+          "tags",
+          "title",
+          "id"
+        ],
+        "type": "object"
+      },
+      "CommentPermissionType": {
+        "enum": [
+          "disabled",
+          "forbidden",
+          "owners",
+          "signed_in_users",
+          "everyone"
+        ],
+        "type": "string"
+      },
+      "SuggestEditPermissionType": {
+        "enum": [
+          "disabled",
+          "forbidden",
+          "owners",
+          "signed_in_users"
+        ],
+        "type": "string"
+      },
+      "Partial_NoteFeatureValidPermissionRecordType_": {
+        "properties": {},
+        "type": "object",
+        "description": "Make all properties in T optional"
+      },
+      "FolderName": {
+        "type": "string",
+        "example": "Engineering",
+        "description": "Folder name."
+      },
+      "FolderIconCodepoint": {
+        "type": "string",
+        "example": "1F525",
+        "description": "Folder icon as an emoji unified codepoint string.\nExamples: `1F525` (\ud83d\udd25), `2764-FE0F` (\u2764\ufe0f)."
+      },
+      "FolderColorHex": {
+        "type": "string",
+        "example": "#FF6B6B",
+        "description": "Folder display color in hexadecimal format.\nAccepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`."
+      },
+      "ApiFolder": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/FolderName"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FolderIconCodepoint"
+              }
+            ],
+            "nullable": true
+          },
+          "color": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FolderColorHex"
+              }
+            ],
+            "nullable": true
+          },
+          "parentFolderId": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "number",
+            "format": "double"
+          },
+          "updatedAt": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "icon",
+          "color",
+          "parentFolderId",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiFolderOrder": {
+        "description": "Per-user display order of folders: maps each parent folder id (or `root`) to\nan ordered list of child folder ids. Keys and values use the same UUIDs as\n{@link ApiFolder.id} (not Yjs clientIds stored internally in preferences).",
+        "properties": {},
+        "type": "object",
+        "additionalProperties": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "UpdateFolderOrderBody": {
+        "properties": {
+          "order": {
+            "$ref": "#/components/schemas/ApiFolderOrder"
+          }
+        },
+        "required": [
+          "order"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateUserFolderBody": {
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/FolderColorHex"
+          },
+          "icon": {
+            "$ref": "#/components/schemas/FolderIconCodepoint"
+          },
+          "description": {
+            "type": "string"
+          },
+          "parentFolderId": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/FolderName"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateUserFolderBody": {
+        "properties": {
+          "parentFolderId": {
+            "type": "string",
+            "nullable": true
+          },
+          "color": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FolderColorHex"
+              }
+            ],
+            "nullable": true
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FolderIconCodepoint"
+              }
+            ],
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "$ref": "#/components/schemas/FolderName"
+          }
+        },
+        "type": "object"
+      },
+      "ApiTrashNote": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "deletedAt": {
+            "type": "number",
+            "format": "double"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "teamId": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortId": {
+            "type": "string"
+          },
+          "publishType": {
+            "type": "string"
+          },
+          "permanentDeletedAt": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "tags",
+          "deletedAt",
+          "ownerId",
+          "teamId",
+          "shortId",
+          "publishType",
+          "permanentDeletedAt"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "BatchOperationError": {
+        "enum": [
+          "NOT_FOUND",
+          "PERMISSION_DENIED",
+          "INTERNAL_ERROR"
+        ],
+        "type": "string"
+      },
+      "TrashBatchOperationResponse": {
+        "properties": {},
+        "additionalProperties": {
+          "properties": {
+            "reason": {
+              "$ref": "#/components/schemas/BatchOperationError"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "success",
+                "failure"
+              ]
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "type": "object"
+        },
+        "type": "object"
+      },
+      "BatchRestoreTrashBody": {
+        "properties": {
+          "noteIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "noteIds"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TeamVisibilityType": {
+        "enum": [
+          "public",
+          "private"
+        ],
+        "type": "string"
+      },
+      "Team": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/TeamVisibilityType"
+          },
+          "upgraded": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "id",
+          "ownerId",
+          "name",
+          "logo",
+          "path",
+          "description",
+          "visibility",
+          "upgraded",
+          "createdAt"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateTeamFolderBody": {
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/FolderColorHex"
+          },
+          "icon": {
+            "$ref": "#/components/schemas/FolderIconCodepoint"
+          },
+          "description": {
+            "type": "string"
+          },
+          "parentFolderId": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/FolderName"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateTeamFolderBody": {
+        "properties": {
+          "parentFolderId": {
+            "type": "string",
+            "nullable": true
+          },
+          "color": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FolderColorHex"
+              }
+            ],
+            "nullable": true
+          },
+          "icon": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FolderIconCodepoint"
+              }
+            ],
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "$ref": "#/components/schemas/FolderName"
+          }
+        },
+        "type": "object"
+      },
+      "NoteImageUploadResponse": {
+        "properties": {
+          "data": {
+            "properties": {
+              "link": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "link"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "User": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "userPath": {
+            "type": "string"
+          },
+          "photo": {
+            "type": "string"
+          },
+          "teams": {
+            "items": {
+              "$ref": "#/components/schemas/Team"
+            },
+            "type": "array"
+          },
+          "Teams": {
+            "items": {
+              "$ref": "#/components/schemas/Team"
+            },
+            "type": "array"
+          },
+          "upgraded": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "name",
+          "userPath",
+          "photo",
+          "teams",
+          "upgraded"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "info": {
+    "title": "HackMD OpenAPI",
+    "version": "1.0.0",
+    "description": "HackMD OpenAPI",
+    "license": {
+      "name": "UNLICENSED"
+    },
+    "contact": {
+      "name": "HackMD Team",
+      "email": "support@hackmd.io"
+    }
+  },
+  "paths": {
+    "/notes": {
+      "get": {
+        "operationId": "ListNotes",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/NoteType"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "List all notes for the current user",
+        "tags": [
+          "User Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": []
+      },
+      "post": {
+        "operationId": "CreateNote",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "207": {
+            "description": "Multi-Status"
+          }
+        },
+        "description": "Create a new note for the current user",
+        "tags": [
+          "User Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "The note content or a JSON object with note properties.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "origin": {
+                        "type": "string"
+                      },
+                      "parentFolderId": {
+                        "type": "string"
+                      },
+                      "permalink": {
+                        "type": "string"
+                      },
+                      "noteFeatures": {
+                        "$ref": "#/components/schemas/Partial_NoteFeatureValidPermissionRecordType_"
+                      },
+                      "suggestEditPermission": {
+                        "$ref": "#/components/schemas/SuggestEditPermissionType"
+                      },
+                      "commentPermission": {
+                        "$ref": "#/components/schemas/CommentPermissionType"
+                      },
+                      "writePermission": {
+                        "$ref": "#/components/schemas/NotePermissionRole"
+                      },
+                      "readPermission": {
+                        "$ref": "#/components/schemas/NotePermissionRole"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "tags": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "title": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "description": "The note content or a JSON object with note properties."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/{noteId}": {
+      "get": {
+        "operationId": "GetNote",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Get a single note for the current user (or team note if accessible)",
+        "tags": [
+          "User Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The ID of the note to retrieve.",
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteNote",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        },
+        "description": "Delete a note for the current user",
+        "tags": [
+          "User Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The ID of the note to delete.",
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "UpdateNote",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Update a note's content or permissions for the current user",
+        "tags": [
+          "User Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The ID of the note to update.",
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The properties to update on the note.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "parentFolderId": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "permalink": {
+                    "type": "string"
+                  },
+                  "writePermission": {
+                    "$ref": "#/components/schemas/NotePermissionRole"
+                  },
+                  "readPermission": {
+                    "$ref": "#/components/schemas/NotePermissionRole"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "description": "The properties to update on the note."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folders": {
+      "get": {
+        "operationId": "ListFolders",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiFolder"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "List all folders in the current user's workspace",
+        "tags": [
+          "User Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": []
+      },
+      "post": {
+        "operationId": "CreateFolder",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Create a new folder in the current user's workspace",
+        "tags": [
+          "User Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "The folder properties.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserFolderBody",
+                "description": "The folder properties."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folders/folder-order": {
+      "get": {
+        "operationId": "GetFolderOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiFolderOrder"
+                }
+              }
+            }
+          }
+        },
+        "description": "Get your personal folder ordering for this workspace (parent folder id or `root` \u2192 ordered child folder ids).\nUses the same folder UUIDs as    (not internal Yjs clientIds).",
+        "tags": [
+          "User Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": []
+      },
+      "put": {
+        "operationId": "UpdateFolderOrder",
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Replace your personal folder ordering for this workspace.",
+        "tags": [
+          "User Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFolderOrderBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folders/{folderId}": {
+      "get": {
+        "operationId": "GetFolder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiFolder"
+                    },
+                    {}
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "Get a single folder in the current user's workspace",
+        "tags": [
+          "User Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The ID of the folder to retrieve.",
+            "in": "path",
+            "name": "folderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "UpdateFolder",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Update a folder in the current user's workspace",
+        "tags": [
+          "User Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The ID of the folder to update.",
+            "in": "path",
+            "name": "folderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The properties to update.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserFolderBody",
+                "description": "The properties to update."
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DeleteFolder",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        },
+        "description": "Delete a folder in the current user's workspace",
+        "tags": [
+          "User Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The ID of the folder to delete.",
+            "in": "path",
+            "name": "folderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/trash": {
+      "get": {
+        "operationId": "ListPersonalTrash",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiTrashNote"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "List trashed notes in your personal workspace (same data as the internal trash API).",
+        "tags": [
+          "Trash"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/trash/batch-restore": {
+      "put": {
+        "operationId": "BatchRestore",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrashBatchOperationResponse"
+                }
+              }
+            }
+          },
+          "207": {
+            "description": "Multi-Status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrashBatchOperationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Restore multiple notes from trash in one request.",
+        "tags": [
+          "Trash"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchRestoreTrashBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trash/{noteId}/restore": {
+      "put": {
+        "operationId": "RestoreNote",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        },
+        "description": "Restore a single note from trash.",
+        "tags": [
+          "Trash"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Encoded note id of the trashed note.",
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/teams/{teampath}/trash": {
+      "get": {
+        "operationId": "ListTeamTrash",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiTrashNote"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "List trashed notes in a team workspace (team admin only; same rules as the internal API).",
+        "tags": [
+          "Trash"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/teams": {
+      "get": {
+        "operationId": "ListTeams",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Team"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "List the teams for the current user",
+        "tags": [
+          "Teams"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/teams/{teampath}/notes": {
+      "get": {
+        "operationId": "ListTeamNotes",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/NoteType"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "List all notes for a team",
+        "tags": [
+          "Team Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "CreateTeamNote",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "207": {
+            "description": "Multi-Status"
+          }
+        },
+        "description": "Create a new note for a team",
+        "tags": [
+          "Team Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The note content (string) or a JSON object with note properties (title, content, permissions, etc.).",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "origin": {
+                        "type": "string"
+                      },
+                      "parentFolderId": {
+                        "type": "string"
+                      },
+                      "permalink": {
+                        "type": "string"
+                      },
+                      "noteFeatures": {
+                        "$ref": "#/components/schemas/Partial_NoteFeatureValidPermissionRecordType_"
+                      },
+                      "suggestEditPermission": {
+                        "$ref": "#/components/schemas/SuggestEditPermissionType"
+                      },
+                      "commentPermission": {
+                        "$ref": "#/components/schemas/CommentPermissionType"
+                      },
+                      "writePermission": {
+                        "$ref": "#/components/schemas/NotePermissionRole"
+                      },
+                      "readPermission": {
+                        "$ref": "#/components/schemas/NotePermissionRole"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "tags": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "title": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "description": "The note content (string) or a JSON object with note properties (title, content, permissions, etc.)."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teampath}/notes/{noteId}": {
+      "get": {
+        "operationId": "GetTeamNote",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Get a single note for a team",
+        "tags": [
+          "Team Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the note to retrieve.",
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "UpdateTeamNote",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Update a team note",
+        "tags": [
+          "Team Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the note to update.",
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The properties to update on the team note (e.g., content, permissions, permalink, parentFolderId).",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "parentFolderId": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "permalink": {
+                    "type": "string"
+                  },
+                  "writePermission": {
+                    "$ref": "#/components/schemas/NotePermissionRole"
+                  },
+                  "readPermission": {
+                    "$ref": "#/components/schemas/NotePermissionRole"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "description": "The properties to update on the team note (e.g., content, permissions, permalink, parentFolderId)."
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DeleteTeamNote",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        },
+        "description": "Delete a team note",
+        "tags": [
+          "Team Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the note to delete.",
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/teams/{teampath}/folders": {
+      "get": {
+        "operationId": "ListTeamFolders",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiFolder"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "List all folders in a team workspace",
+        "tags": [
+          "Team Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "CreateTeamFolder",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Create a new folder in a team workspace",
+        "tags": [
+          "Team Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The folder properties.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeamFolderBody",
+                "description": "The folder properties."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teampath}/folders/folder-order": {
+      "get": {
+        "operationId": "GetTeamFolderOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiFolderOrder"
+                }
+              }
+            }
+          }
+        },
+        "description": "Get your personal folder ordering for this team workspace (parent folder id or `root` \u2192 ordered child folder ids).\nUses the same folder UUIDs as    (not internal Yjs clientIds).",
+        "tags": [
+          "Team Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateTeamFolderOrder",
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Replace your personal folder ordering for this team workspace.",
+        "tags": [
+          "Team Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFolderOrderBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teampath}/folders/{folderId}": {
+      "get": {
+        "operationId": "GetTeamFolder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiFolder"
+                    },
+                    {}
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "Get a single folder in a team workspace",
+        "tags": [
+          "Team Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the folder to retrieve.",
+            "in": "path",
+            "name": "folderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "UpdateTeamFolder",
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "description": "Update a folder in a team workspace",
+        "tags": [
+          "Team Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the folder to update.",
+            "in": "path",
+            "name": "folderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The properties to update.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTeamFolderBody",
+                "description": "The properties to update."
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DeleteTeamFolder",
+        "responses": {
+          "204": {
+            "description": "No content"
+          }
+        },
+        "description": "Delete a folder in a team workspace",
+        "tags": [
+          "Team Folders"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The path identifier for the team.",
+            "in": "path",
+            "name": "teampath",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the folder to delete.",
+            "in": "path",
+            "name": "folderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/notes/{noteId}/images": {
+      "post": {
+        "operationId": "UploadNoteImage",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/NoteImageUploadResponse"
+                    },
+                    {}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "413": {
+            "description": "Payload Too Large"
+          },
+          "415": {
+            "description": "Unsupported Media Type"
+          },
+          "422": {
+            "description": "Validation Failed"
+          },
+          "429": {
+            "description": "Too Many Requests"
+          }
+        },
+        "description": "Upload an image for a note.",
+        "tags": [
+          "User Notes"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noteId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "image"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "operationId": "GetCurrentUser",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "description": "Get the current user's profile",
+        "tags": [
+          "Profile"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/history": {
+      "get": {
+        "operationId": "GetHistory",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {},
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "Get note history for the current user",
+        "tags": [
+          "History"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "The maximum number of history items to return.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/v1",
+      "description": "API Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Profile",
+      "description": "Operations to retrieve user profile information."
+    },
+    {
+      "name": "Teams",
+      "description": "Operations related to user teams."
+    },
+    {
+      "name": "History",
+      "description": "Operations related to user's note history."
+    },
+    {
+      "name": "Team Notes",
+      "description": "Operations related to notes within a team."
+    },
+    {
+      "name": "User Notes",
+      "description": "Operations related to a user's personal notes."
+    },
+    {
+      "name": "User Folders",
+      "description": "Operations related to a user's personal folders."
+    },
+    {
+      "name": "Team Folders",
+      "description": "Operations related to folders within a team."
+    },
+    {
+      "name": "Trash",
+      "description": "Operations for listing and restoring trashed notes."
+    }
+  ]
+}

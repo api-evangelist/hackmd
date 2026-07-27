@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/hackmdio/hackmd-cli
+name: hackmd-cli
+official: true
+repository: https://github.com/hackmdio/hackmd-cli
+language: typescript
+install:
+- method: npm
+  command: npm install -g @hackmd/hackmd-cli
+auth:
+  style: bearer-token
+  env: HMD_API_ACCESS_TOKEN / HMD_API_ENDPOINT
+  note: Configured with a HackMD API access token; talks to https://api.hackmd.io/v1.
+command_surface:
+- group: login/whoami
+  purpose: Authenticate the CLI with an API token and show the current user.
+- group: notes
+  purpose: List, create, read, update, delete and export the user's notes.
+- group: team
+  purpose: List teams and manage team notes.
+- group: history
+  purpose: Show recently viewed notes.
+- group: export
+  purpose: Export note content to local files.
+note: Command groups are summarized from the official CLI; see the repository README
+  for the exact verbs and flags.

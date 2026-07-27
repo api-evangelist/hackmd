@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: searched
+source: https://hackmd.io/@docs/developer-portal
+packages:
+- language: javascript
+  registry: npm
+  name: "@hackmd/api"
+  url: https://www.npmjs.com/package/@hackmd/api
+  source_code: https://github.com/hackmdio/api-client
+  install: npm install @hackmd/api
+  description: Official HackMD API client for Node.js/TypeScript. Wraps the full v1
+    REST API (notes, folders, teams, images, history) with automatic retry and
+    exponential backoff on 5xx/429/network errors and ETag caching support.
+  official: true
+- language: javascript
+  registry: github
+  name: hackmd-cli
+  url: https://github.com/hackmdio/hackmd-cli
+  install: npm install -g @hackmd/hackmd-cli
+  description: Official HackMD command-line interface (TypeScript) for managing notes
+    from the terminal, built on the API client.
+  official: true
+notes:
+- The HackMD Developer Portal also links to community/third-party clients (Python,
+  C#/.NET Core, Rust) and editor integrations (VSCode extension, Raycast). Exact
+  package names were not verified first-party, so they are not asserted here.

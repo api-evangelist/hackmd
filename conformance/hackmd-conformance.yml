@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hackmd-openapi-original.json
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: Provider publishes an OpenAPI 3.0.0 document at https://api.hackmd.io/v1/docs/swagger.json
+- id: rest
+  conforms: true
+  evidence: Resource-oriented JSON over HTTP with conventional verbs and status codes
+- id: rfc9727-api-catalog
+  conforms: true
+  evidence: Serves /.well-known/api-catalog (linkset) advertising spec, docs, status
+- id: bearer-token-auth
+  conforms: true
+  evidence: securityScheme type http scheme bearer (API access token)
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme; auth is a personal API access token
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Error responses use plain HTTP status codes, not application/problem+json
+- id: rfc8594-sunset
+  conforms: false
+  evidence: No Sunset/Deprecation header or deprecation policy published
+- id: webhooks
+  conforms: false
+  evidence: No webhook or event-streaming surface documented

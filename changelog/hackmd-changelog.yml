@@ -1,0 +1,22 @@
+generated: '2026-07-19'
+method: searched
+source: https://hackmd.io/@docs/changelog
+docs: https://hackmd.io/@docs/changelog
+scheme: dated
+current_version: v1
+entries:
+- date: '2026-03-19'
+  type: addition
+  highlight: Allow API routes to accept content type as Markdown (text/markdown request bodies).
+- date: '2026-01-23'
+  type: addition
+  highlight: Update API to support updating note titles, tags, and descriptions.
+- date: '2025-04-29'
+  type: addition
+  highlight: Support folder API for notes (personal and team folders, folder ordering).
+- date: '2024-03-19'
+  type: addition
+  highlight: Attachment (image) download/upload API.
+- date: '2020-08-18'
+  type: addition
+  highlight: Initial User and Notes API.

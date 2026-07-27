@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: searched
+source: https://hackmd.io/.well-known/api-catalog
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://hackmd.io/@docs/developer-portal
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No formal deprecation/sunset policy published. The v1 API has been additive
+    since 2020 (see changelog).
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.hackmd.io/
+status_api: https://status.hackmd.io/api/v2/status.json
+changelog: https://hackmd.io/@docs/changelog
+deprecated_operations: []
