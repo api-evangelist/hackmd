@@ -225,7 +225,7 @@ common:
 - type: Authentication
   url: authentication/hackmd-authentication.yml
 - type: OpenAPI
-  url: openapi/hackmd-openapi-original.json
+  url: openapi/_original/hackmd-openapi-original.json
 - type: Overlay
   url: overlays/hackmd-openapi-overlay.yaml
 - type: Packages
