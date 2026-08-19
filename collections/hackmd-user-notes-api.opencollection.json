@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HackMD Open History User Notes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListNotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/notes",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all notes for the current user"
+        },
+        {
+          "info": {
+            "name": "CreateNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v1/notes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new note for the current user"
+        },
+        {
+          "info": {
+            "name": "GetNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/notes/:noteId",
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the note to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single note for the current user (or team note if accessible)"
+        },
+        {
+          "info": {
+            "name": "UpdateNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/v1/notes/:noteId",
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the note to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a note's content or permissions for the current user"
+        },
+        {
+          "info": {
+            "name": "DeleteNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/v1/notes/:noteId",
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the note to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a note for the current user"
+        },
+        {
+          "info": {
+            "name": "UploadNoteImage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v1/notes/:noteId/images",
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "image",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload an image for a note."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

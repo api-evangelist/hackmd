@@ -1,0 +1,529 @@
+{
+  "item": [
+    {
+      "id": "968f2484-2725-498e-b8e0-770881cd9f9a",
+      "name": "Trash",
+      "description": {
+        "content": "Operations for listing and restoring trashed notes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ee33c59d-c691-4cbf-8f6d-a2002a4603f6",
+          "name": "List Personal Trash",
+          "request": {
+            "name": "List Personal Trash",
+            "description": {
+              "content": "List trashed notes in your personal workspace (same data as the internal trash API).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trash"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "96f346d8-0c26-44f1-8408-632e79fa8141",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"deletedAt\": 509.84295696744454,\n    \"ownerId\": \"string\",\n    \"teamId\": \"string\",\n    \"shortId\": \"string\",\n    \"publishType\": \"string\",\n    \"permanentDeletedAt\": 7352.273593942019\n  },\n  {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"deletedAt\": 8011.070795585574,\n    \"ownerId\": \"string\",\n    \"teamId\": \"string\",\n    \"shortId\": \"string\",\n    \"publishType\": \"string\",\n    \"permanentDeletedAt\": 327.20185150245\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a40ae668-4628-4536-9312-c7fa012c5756",
+          "name": "Batch Restore",
+          "request": {
+            "name": "Batch Restore",
+            "description": {
+              "content": "Restore multiple notes from trash in one request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trash",
+                "batch-restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"noteIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b0c503ef-56c1-4c4b-b322-7a6f0dc06bd4",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trash",
+                    "batch-restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"noteIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"status\": \"failure\",\n    \"reason\": \"PERMISSION_DENIED\"\n  },\n  \"key_1\": {\n    \"status\": \"success\",\n    \"reason\": \"PERMISSION_DENIED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89274693-a7fb-44ba-852e-aab6d378ea84",
+              "name": "Multi-Status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trash",
+                    "batch-restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"noteIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"status\": \"failure\",\n    \"reason\": \"PERMISSION_DENIED\"\n  },\n  \"key_1\": {\n    \"status\": \"success\",\n    \"reason\": \"PERMISSION_DENIED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32cf604a-7482-49d7-b38e-5554db4c801a",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trash",
+                    "batch-restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"noteIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a29c54c-eee5-4afb-8afd-00f9d3d82b7a",
+          "name": "Restore Note",
+          "request": {
+            "name": "Restore Note",
+            "description": {
+              "content": "Restore a single note from trash.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trash",
+                ":noteId",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "noteId",
+                  "description": "(Required) Encoded note id of the trashed note."
+                }
+              ]
+            },
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f55474de-5dfc-4a66-b329-bc99bcc13fc2",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trash",
+                    ":noteId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "noteId",
+                      "description": "(Required) Encoded note id of the trashed note."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c45d2b3f-f5aa-4d1e-8a60-1561432805b0",
+          "name": "List Team Trash",
+          "request": {
+            "name": "List Team Trash",
+            "description": {
+              "content": "List trashed notes in a team workspace (team admin only; same rules as the internal API).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teampath",
+                "trash"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teampath",
+                  "description": "(Required) The path identifier for the team."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5b5ad3f1-5d0c-426c-8633-1cd753672dbc",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teampath",
+                    "trash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teampath",
+                      "description": "(Required) The path identifier for the team."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"deletedAt\": 9140.228013375727,\n    \"ownerId\": \"string\",\n    \"teamId\": \"string\",\n    \"shortId\": \"string\",\n    \"publishType\": \"string\",\n    \"permanentDeletedAt\": 1753.2486653222968\n  },\n  {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"deletedAt\": 202.13440045232178,\n    \"ownerId\": \"string\",\n    \"teamId\": \"string\",\n    \"shortId\": \"string\",\n    \"publishType\": \"string\",\n    \"permanentDeletedAt\": 5084.716526931191\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4a773cce-c2e4-4f81-8fba-0cc9a8383de5",
+    "name": "HackMD Open History Trash API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HackMD OpenAPI\n\nContact Support:\n Name: HackMD Team\n Email: support@hackmd.io",
+      "type": "text/plain"
+    }
+  }
+}

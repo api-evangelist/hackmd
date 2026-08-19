@@ -1,0 +1,118 @@
+{
+  "item": [
+    {
+      "id": "2f40c5f2-aeb1-42c4-98a1-93e351c83a8e",
+      "name": "Profile",
+      "description": {
+        "content": "Operations to retrieve user profile information.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9096088f-3d80-46a3-ab6f-3fb1e56430ab",
+          "name": "Get Current User",
+          "request": {
+            "name": "Get Current User",
+            "description": {
+              "content": "Get the current user's profile",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e74cc80b-0145-4c71-903d-bfc774471ae3",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"userPath\": \"string\",\n  \"photo\": \"string\",\n  \"teams\": [\n    {\n      \"id\": \"string\",\n      \"ownerId\": \"string\",\n      \"name\": \"string\",\n      \"logo\": \"string\",\n      \"path\": \"string\",\n      \"description\": \"string\",\n      \"visibility\": \"public\",\n      \"upgraded\": true,\n      \"createdAt\": 7557.5181583595795\n    },\n    {\n      \"id\": \"string\",\n      \"ownerId\": \"string\",\n      \"name\": \"string\",\n      \"logo\": \"string\",\n      \"path\": \"string\",\n      \"description\": \"string\",\n      \"visibility\": \"public\",\n      \"upgraded\": false,\n      \"createdAt\": 3919.3583342917414\n    }\n  ],\n  \"upgraded\": true,\n  \"Teams\": [\n    {\n      \"id\": \"string\",\n      \"ownerId\": \"string\",\n      \"name\": \"string\",\n      \"logo\": \"string\",\n      \"path\": \"string\",\n      \"description\": \"string\",\n      \"visibility\": \"private\",\n      \"upgraded\": false,\n      \"createdAt\": 4043.43895826605\n    },\n    {\n      \"id\": \"string\",\n      \"ownerId\": \"string\",\n      \"name\": \"string\",\n      \"logo\": \"string\",\n      \"path\": \"string\",\n      \"description\": \"string\",\n      \"visibility\": \"public\",\n      \"upgraded\": false,\n      \"createdAt\": 216.2873339213156\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "40b186c7-63e8-45af-847c-c022df0ecbc3",
+    "name": "HackMD Open History Profile API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HackMD OpenAPI\n\nContact Support:\n Name: HackMD Team\n Email: support@hackmd.io",
+      "type": "text/plain"
+    }
+  }
+}

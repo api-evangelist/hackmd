@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HackMD Open History Team Notes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Team Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTeamNotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/teams/:teampath/notes",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all notes for a team"
+        },
+        {
+          "info": {
+            "name": "CreateTeamNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v1/teams/:teampath/notes",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new note for a team"
+        },
+        {
+          "info": {
+            "name": "GetTeamNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/teams/:teampath/notes/:noteId",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              },
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the note to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single note for a team"
+        },
+        {
+          "info": {
+            "name": "UpdateTeamNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/v1/teams/:teampath/notes/:noteId",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              },
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the note to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a team note"
+        },
+        {
+          "info": {
+            "name": "DeleteTeamNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/v1/teams/:teampath/notes/:noteId",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              },
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the note to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a team note"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

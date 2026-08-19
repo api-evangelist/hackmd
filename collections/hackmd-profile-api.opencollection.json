@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HackMD Open History Profile API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GetCurrentUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/me",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the current user's profile"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

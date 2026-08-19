@@ -1,0 +1,207 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HackMD Open History Team Folders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Team Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListTeamFolders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/teams/:teampath/folders",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all folders in a team workspace"
+        },
+        {
+          "info": {
+            "name": "CreateTeamFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v1/teams/:teampath/folders",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new folder in a team workspace"
+        },
+        {
+          "info": {
+            "name": "GetTeamFolderOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/teams/:teampath/folders/folder-order",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get your personal folder ordering for this team workspace (parent folder id or `root` → ordered child folder ids).\nUses the same folder UUIDs as    (not internal Yjs clientIds)."
+        },
+        {
+          "info": {
+            "name": "UpdateTeamFolderOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/v1/teams/:teampath/folders/folder-order",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace your personal folder ordering for this team workspace."
+        },
+        {
+          "info": {
+            "name": "GetTeamFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/teams/:teampath/folders/:folderId",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              },
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the folder to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single folder in a team workspace"
+        },
+        {
+          "info": {
+            "name": "UpdateTeamFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/v1/teams/:teampath/folders/:folderId",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              },
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the folder to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a folder in a team workspace"
+        },
+        {
+          "info": {
+            "name": "DeleteTeamFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/v1/teams/:teampath/folders/:folderId",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              },
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the folder to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a folder in a team workspace"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

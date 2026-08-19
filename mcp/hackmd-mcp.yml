@@ -169,3 +169,9 @@ tools:
   source_operation: openapi/hackmd-openapi-original.json#GetHistory
   method: GET
   path: /v1/history
+deployment:
+  mode: none
+  verified: derived
+  tools: 32
+  checked: '2026-08-12'
+  source: catalog MCP census

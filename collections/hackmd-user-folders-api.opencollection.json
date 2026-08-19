@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HackMD Open History User Folders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListFolders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/folders",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all folders in the current user's workspace"
+        },
+        {
+          "info": {
+            "name": "CreateFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v1/folders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new folder in the current user's workspace"
+        },
+        {
+          "info": {
+            "name": "GetFolderOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/folders/folder-order",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get your personal folder ordering for this workspace (parent folder id or `root` → ordered child folder ids).\nUses the same folder UUIDs as    (not internal Yjs clientIds)."
+        },
+        {
+          "info": {
+            "name": "UpdateFolderOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/v1/folders/folder-order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace your personal folder ordering for this workspace."
+        },
+        {
+          "info": {
+            "name": "GetFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/folders/:folderId",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the folder to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single folder in the current user's workspace"
+        },
+        {
+          "info": {
+            "name": "UpdateFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/v1/folders/:folderId",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the folder to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a folder in the current user's workspace"
+        },
+        {
+          "info": {
+            "name": "DeleteFolder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/v1/folders/:folderId",
+            "params": [
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the folder to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a folder in the current user's workspace"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

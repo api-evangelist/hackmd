@@ -1,0 +1,699 @@
+{
+  "item": [
+    {
+      "id": "675d9a24-ec74-4b2a-95b8-b6be97ed6b38",
+      "name": "Team Notes",
+      "description": {
+        "content": "Operations related to notes within a team.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26543afb-fd35-43ca-a282-a90a76921659",
+          "name": "List Team Notes",
+          "request": {
+            "name": "List Team Notes",
+            "description": {
+              "content": "List all notes for a team",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teampath",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teampath",
+                  "description": "(Required) The path identifier for the team."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b2ed47b6-736b-4414-a44b-bde0a0b6ded2",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teampath",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teampath",
+                      "description": "(Required) The path identifier for the team."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"writePermission\": \"guest\",\n    \"readPermission\": \"guest\",\n    \"shortId\": \"string\",\n    \"publishLink\": \"string\",\n    \"permalink\": \"string\",\n    \"teamPath\": \"string\",\n    \"userPath\": \"string\",\n    \"publishedAt\": 5322.452182031398,\n    \"publishType\": \"slide\",\n    \"lastChangeUser\": {\n      \"name\": \"string\",\n      \"userPath\": \"string\",\n      \"photo\": \"string\",\n      \"biography\": \"string\"\n    },\n    \"tagsUpdatedAt\": 3577.6269268221204,\n    \"titleUpdatedAt\": 7217.516987260752,\n    \"createdAt\": 5193.569627219356,\n    \"lastChangedAt\": 894.8842306075411,\n    \"description\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"title\": \"string\",\n    \"id\": \"string\",\n    \"folderPaths\": [\n      {\n        \"id\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"name\": \"string\",\n        \"icon\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"color\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"parentId\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"clientId\": \"string\"\n      },\n      {\n        \"id\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"name\": \"string\",\n        \"icon\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"color\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"parentId\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"clientId\": \"string\"\n      }\n    ]\n  },\n  {\n    \"writePermission\": \"guest\",\n    \"readPermission\": \"owner\",\n    \"shortId\": \"string\",\n    \"publishLink\": \"string\",\n    \"permalink\": \"string\",\n    \"teamPath\": \"string\",\n    \"userPath\": \"string\",\n    \"publishedAt\": 8300.945622189329,\n    \"publishType\": \"slide\",\n    \"lastChangeUser\": {\n      \"name\": \"string\",\n      \"userPath\": \"string\",\n      \"photo\": \"string\",\n      \"biography\": \"string\"\n    },\n    \"tagsUpdatedAt\": 7603.491933994131,\n    \"titleUpdatedAt\": 675.7503165400302,\n    \"createdAt\": 8867.568012379144,\n    \"lastChangedAt\": 9714.858849781682,\n    \"description\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"title\": \"string\",\n    \"id\": \"string\",\n    \"folderPaths\": [\n      {\n        \"id\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"name\": \"string\",\n        \"icon\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"color\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"parentId\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"clientId\": \"string\"\n      },\n      {\n        \"id\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"name\": \"string\",\n        \"icon\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"color\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"parentId\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"clientId\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69a07063-a1c0-43e6-aa30-279466ffacee",
+          "name": "Create Team Note",
+          "request": {
+            "name": "Create Team Note",
+            "description": {
+              "content": "Create a new note for a team",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teampath",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teampath",
+                  "description": "(Required) The path identifier for the team."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": \"<string>\",\n  \"parentFolderId\": \"<string>\",\n  \"permalink\": \"<string>\",\n  \"noteFeatures\": {},\n  \"suggestEditPermission\": \"<string>\",\n  \"commentPermission\": \"<string>\",\n  \"writePermission\": \"<string>\",\n  \"readPermission\": \"<string>\",\n  \"content\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bcb1e68d-051f-4be5-8a86-77c11ea56a48",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teampath",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teampath",
+                      "description": "(Required) The path identifier for the team."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"origin\": \"<string>\",\n  \"parentFolderId\": \"<string>\",\n  \"permalink\": \"<string>\",\n  \"noteFeatures\": {},\n  \"suggestEditPermission\": \"<string>\",\n  \"commentPermission\": \"<string>\",\n  \"writePermission\": \"<string>\",\n  \"readPermission\": \"<string>\",\n  \"content\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f532c37-8f42-46aa-8d61-753bdf4fc916",
+              "name": "Multi-Status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teampath",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teampath",
+                      "description": "(Required) The path identifier for the team."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"origin\": \"<string>\",\n  \"parentFolderId\": \"<string>\",\n  \"permalink\": \"<string>\",\n  \"noteFeatures\": {},\n  \"suggestEditPermission\": \"<string>\",\n  \"commentPermission\": \"<string>\",\n  \"writePermission\": \"<string>\",\n  \"readPermission\": \"<string>\",\n  \"content\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73eef8b3-fb3c-4fad-86da-219d770711ff",
+          "name": "Get Team Note",
+          "request": {
+            "name": "Get Team Note",
+            "description": {
+              "content": "Get a single note for a team",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teampath",
+                "notes",
+                ":noteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teampath",
+                  "description": "(Required) The path identifier for the team."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "noteId",
+                  "description": "(Required) The ID of the note to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b3a31ce4-947a-4b0f-bbe8-410a348b006f",
+              "name": "Ok",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teampath",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teampath",
+                      "description": "(Required) The path identifier for the team."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "noteId",
+                      "description": "(Required) The ID of the note to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f79c5f0-b897-4b58-a747-e936c6556399",
+          "name": "Update Team Note",
+          "request": {
+            "name": "Update Team Note",
+            "description": {
+              "content": "Update a team note",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teampath",
+                "notes",
+                ":noteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teampath",
+                  "description": "(Required) The path identifier for the team."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "noteId",
+                  "description": "(Required) The ID of the note to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parentFolderId\": \"<string>\",\n  \"permalink\": \"<string>\",\n  \"writePermission\": \"<string>\",\n  \"readPermission\": \"<string>\",\n  \"content\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7fa979b3-4ee6-4069-bdd5-105d00b9c6e3",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teampath",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teampath",
+                      "description": "(Required) The path identifier for the team."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "noteId",
+                      "description": "(Required) The ID of the note to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"parentFolderId\": \"<string>\",\n  \"permalink\": \"<string>\",\n  \"writePermission\": \"<string>\",\n  \"readPermission\": \"<string>\",\n  \"content\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "352bbf3d-0ab1-43db-b159-2778e5e23cae",
+          "name": "Delete Team Note",
+          "request": {
+            "name": "Delete Team Note",
+            "description": {
+              "content": "Delete a team note",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                ":teampath",
+                "notes",
+                ":noteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "teampath",
+                  "description": "(Required) The path identifier for the team."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "noteId",
+                  "description": "(Required) The ID of the note to delete."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "38b5ec32-3f76-46e8-b0c1-1107ce8363d6",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    ":teampath",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "teampath",
+                      "description": "(Required) The path identifier for the team."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "noteId",
+                      "description": "(Required) The ID of the note to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dcdf7634-ec28-41f0-ad53-201b26f19856",
+    "name": "HackMD Open History Team Notes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "HackMD OpenAPI\n\nContact Support:\n Name: HackMD Team\n Email: support@hackmd.io",
+      "type": "text/plain"
+    }
+  }
+}

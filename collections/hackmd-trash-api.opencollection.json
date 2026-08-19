@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HackMD Open History Trash API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trash",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ListPersonalTrash",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/trash",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List trashed notes in your personal workspace (same data as the internal trash API)."
+        },
+        {
+          "info": {
+            "name": "BatchRestore",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/v1/trash/batch-restore",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restore multiple notes from trash in one request."
+        },
+        {
+          "info": {
+            "name": "RestoreNote",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/v1/trash/:noteId/restore",
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "Encoded note id of the trashed note."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restore a single note from trash."
+        },
+        {
+          "info": {
+            "name": "ListTeamTrash",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v1/teams/:teampath/trash",
+            "params": [
+              {
+                "name": "teampath",
+                "value": "",
+                "type": "path",
+                "description": "The path identifier for the team."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List trashed notes in a team workspace (team admin only; same rules as the internal API)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
