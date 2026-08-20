@@ -129,6 +129,8 @@ apis:
   humanURL: https://hackmd.io/@docs/developer-portal
   baseURL: https://api.hackmd.io/v1
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
