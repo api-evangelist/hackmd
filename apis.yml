@@ -13,6 +13,18 @@ description: >-
   official Node.js/TypeScript client (@hackmd/api) and command-line interface,
   and advertises its full developer surface through an RFC 9727 api-catalog.
   HackMD is a Techstars-backed company.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
