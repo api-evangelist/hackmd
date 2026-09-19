@@ -89,6 +89,8 @@ apis:
   humanURL: https://hackmd.io/@docs/developer-portal
   baseURL: https://api.hackmd.io/v1
   tags:
+  - Profiles
+  tags_raw:
   - Profile
   properties:
   - type: OpenAPI
