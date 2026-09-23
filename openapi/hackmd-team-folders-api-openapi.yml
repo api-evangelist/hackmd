@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: HackMD Open History Team Folders API
+  title: HackMD Open Team Folders API
   version: 1.0.0
   description: HackMD OpenAPI
   license:
@@ -39,6 +39,8 @@ paths:
         required: true
         schema:
           type: string
+      summary: List team folders
+      x-summary-source: derived
     post:
       operationId: CreateTeamFolder
       responses:
@@ -67,6 +69,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateTeamFolderBody'
               description: The folder properties.
+      summary: Create team folder
+      x-summary-source: derived
   /teams/{teampath}/folders/folder-order:
     get:
       operationId: GetTeamFolderOrder
@@ -79,7 +83,7 @@ paths:
                 $ref: '#/components/schemas/ApiFolderOrder'
       description: 'Get your personal folder ordering for this team workspace (parent folder id or `root` → ordered child folder ids).
 
-        Uses the same folder UUIDs as    (not internal Yjs clientIds).'
+        Uses the same folder UUIDs as (not internal Yjs clientIds).'
       tags:
       - Team Folders
       security:
@@ -90,6 +94,8 @@ paths:
         required: true
         schema:
           type: string
+      summary: Get team folder order
+      x-summary-source: derived
     put:
       operationId: UpdateTeamFolderOrder
       responses:
@@ -115,6 +121,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateFolderOrderBody'
+      summary: Update team folder order
+      x-summary-source: derived
   /teams/{teampath}/folders/{folderId}:
     get:
       operationId: GetTeamFolder
@@ -145,6 +153,8 @@ paths:
         required: true
         schema:
           type: string
+      summary: Get team folder
+      x-summary-source: derived
     patch:
       operationId: UpdateTeamFolder
       responses:
@@ -179,6 +189,8 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateTeamFolderBody'
               description: The properties to update.
+      summary: Update team folder
+      x-summary-source: derived
     delete:
       operationId: DeleteTeamFolder
       responses:
@@ -202,53 +214,14 @@ paths:
         required: true
         schema:
           type: string
+      summary: Delete team folder
+      x-summary-source: derived
 components:
   schemas:
-    FolderIconCodepoint:
-      type: string
-      example: 1F525
-      description: "Folder icon as an emoji unified codepoint string.\nExamples: `1F525` (\uD83D\uDD25), `2764-FE0F` (❤️)."
-    UpdateTeamFolderBody:
-      properties:
-        parentFolderId:
-          type: string
-          nullable: true
-        color:
-          allOf:
-          - $ref: '#/components/schemas/FolderColorHex'
-          nullable: true
-        icon:
-          allOf:
-          - $ref: '#/components/schemas/FolderIconCodepoint'
-          nullable: true
-        description:
-          type: string
-          nullable: true
-        name:
-          $ref: '#/components/schemas/FolderName'
-      type: object
     FolderName:
       type: string
       example: Engineering
       description: Folder name.
-    FolderColorHex:
-      type: string
-      example: '#FF6B6B'
-      description: 'Folder display color in hexadecimal format.
-
-        Accepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`.'
-    ApiFolderOrder:
-      description: 'Per-user display order of folders: maps each parent folder id (or `root`) to
-
-        an ordered list of child folder ids. Keys and values use the same UUIDs as
-
-        {@link ApiFolder.id} (not Yjs clientIds stored internally in preferences).'
-      properties: {}
-      type: object
-      additionalProperties:
-        items:
-          type: string
-        type: array
     UpdateFolderOrderBody:
       properties:
         order:
@@ -257,19 +230,6 @@ components:
       - order
       type: object
       additionalProperties: false
-    CreateTeamFolderBody:
-      properties:
-        color:
-          $ref: '#/components/schemas/FolderColorHex'
-        icon:
-          $ref: '#/components/schemas/FolderIconCodepoint'
-        description:
-          type: string
-        parentFolderId:
-          type: string
-        name:
-          $ref: '#/components/schemas/FolderName'
-      type: object
     ApiFolder:
       properties:
         id:
@@ -277,19 +237,19 @@ components:
         name:
           $ref: '#/components/schemas/FolderName'
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         icon:
           allOf:
           - $ref: '#/components/schemas/FolderIconCodepoint'
-          nullable: true
         color:
           allOf:
           - $ref: '#/components/schemas/FolderColorHex'
-          nullable: true
         parentFolderId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         createdAt:
           type: number
           format: double
@@ -307,6 +267,62 @@ components:
       - updatedAt
       type: object
       additionalProperties: false
+    CreateTeamFolderBody:
+      properties:
+        color:
+          $ref: '#/components/schemas/FolderColorHex'
+        icon:
+          $ref: '#/components/schemas/FolderIconCodepoint'
+        description:
+          type: string
+        parentFolderId:
+          type: string
+        name:
+          $ref: '#/components/schemas/FolderName'
+      type: object
+    FolderIconCodepoint:
+      type: string
+      example: 1F525
+      description: 'Folder icon as an emoji unified codepoint string.
+
+        Examples: `1F525` (🔥), `2764-FE0F` (❤️).'
+    ApiFolderOrder:
+      description: 'Per-user display order of folders: maps each parent folder id (or `root`) to
+
+        an ordered list of child folder ids. Keys and values use the same UUIDs as
+
+        {@link ApiFolder.id} (not Yjs clientIds stored internally in preferences).'
+      properties: {}
+      type: object
+      additionalProperties:
+        items:
+          type: string
+        type: array
+    UpdateTeamFolderBody:
+      properties:
+        parentFolderId:
+          type:
+          - string
+          - 'null'
+        color:
+          allOf:
+          - $ref: '#/components/schemas/FolderColorHex'
+        icon:
+          allOf:
+          - $ref: '#/components/schemas/FolderIconCodepoint'
+        description:
+          type:
+          - string
+          - 'null'
+        name:
+          $ref: '#/components/schemas/FolderName'
+      type: object
+    FolderColorHex:
+      type: string
+      example: '#FF6B6B'
+      description: 'Folder display color in hexadecimal format.
+
+        Accepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`.'
   securitySchemes:
     token:
       type: http

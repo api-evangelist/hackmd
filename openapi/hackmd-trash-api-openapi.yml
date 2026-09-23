@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: HackMD Open History Trash API
+  title: HackMD Open Trash API
   version: 1.0.0
   description: HackMD OpenAPI
   license:
@@ -33,6 +33,8 @@ paths:
       security:
       - token: []
       parameters: []
+      summary: List personal trash
+      x-summary-source: derived
   /trash/batch-restore:
     put:
       operationId: BatchRestore
@@ -63,6 +65,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/BatchRestoreTrashBody'
+      summary: Batch restore
+      x-summary-source: derived
   /trash/{noteId}/restore:
     put:
       operationId: RestoreNote
@@ -81,6 +85,8 @@ paths:
         required: true
         schema:
           type: string
+      summary: Restore note
+      x-summary-source: derived
   /teams/{teampath}/trash:
     get:
       operationId: ListTeamTrash
@@ -105,52 +111,10 @@ paths:
         required: true
         schema:
           type: string
+      summary: List team trash
+      x-summary-source: derived
 components:
   schemas:
-    ApiTrashNote:
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        deletedAt:
-          type: number
-          format: double
-        ownerId:
-          type: string
-        teamId:
-          type: string
-          nullable: true
-        shortId:
-          type: string
-        publishType:
-          type: string
-        permanentDeletedAt:
-          type: number
-          format: double
-          nullable: true
-      required:
-      - id
-      - title
-      - tags
-      - deletedAt
-      - ownerId
-      - teamId
-      - shortId
-      - publishType
-      - permanentDeletedAt
-      type: object
-      additionalProperties: false
-    BatchOperationError:
-      enum:
-      - NOT_FOUND
-      - PERMISSION_DENIED
-      - INTERNAL_ERROR
-      type: string
     TrashBatchOperationResponse:
       properties: {}
       additionalProperties:
@@ -174,6 +138,52 @@ components:
           type: array
       required:
       - noteIds
+      type: object
+      additionalProperties: false
+    BatchOperationError:
+      enum:
+      - NOT_FOUND
+      - PERMISSION_DENIED
+      - INTERNAL_ERROR
+      type: string
+    ApiTrashNote:
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        deletedAt:
+          type: number
+          format: double
+        ownerId:
+          type: string
+        teamId:
+          type:
+          - string
+          - 'null'
+        shortId:
+          type: string
+        publishType:
+          type: string
+        permanentDeletedAt:
+          type:
+          - number
+          - 'null'
+          format: double
+      required:
+      - id
+      - title
+      - tags
+      - deletedAt
+      - ownerId
+      - teamId
+      - shortId
+      - publishType
+      - permanentDeletedAt
       type: object
       additionalProperties: false
   securitySchemes:

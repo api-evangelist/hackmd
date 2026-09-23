@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: HackMD Open History Teams API
+  title: HackMD Open Teams API
   version: 1.0.0
   description: HackMD OpenAPI
   license:
@@ -33,6 +33,8 @@ paths:
       security:
       - token: []
       parameters: []
+      summary: List teams
+      x-summary-source: derived
 components:
   schemas:
     TeamVisibilityType:
@@ -53,8 +55,9 @@ components:
         path:
           type: string
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         visibility:
           $ref: '#/components/schemas/TeamVisibilityType'
         upgraded:
