@@ -115,37 +115,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TrashBatchOperationResponse:
-      properties: {}
-      additionalProperties:
-        properties:
-          reason:
-            $ref: '#/components/schemas/BatchOperationError'
-          status:
-            type: string
-            enum:
-            - success
-            - failure
-        required:
-        - status
-        type: object
-      type: object
-    BatchRestoreTrashBody:
-      properties:
-        noteIds:
-          items:
-            type: string
-          type: array
-      required:
-      - noteIds
-      type: object
-      additionalProperties: false
-    BatchOperationError:
-      enum:
-      - NOT_FOUND
-      - PERMISSION_DENIED
-      - INTERNAL_ERROR
-      type: string
     ApiTrashNote:
       properties:
         id:
@@ -186,6 +155,37 @@ components:
       - permanentDeletedAt
       type: object
       additionalProperties: false
+    BatchOperationError:
+      enum:
+      - NOT_FOUND
+      - PERMISSION_DENIED
+      - INTERNAL_ERROR
+      type: string
+    BatchRestoreTrashBody:
+      properties:
+        noteIds:
+          items:
+            type: string
+          type: array
+      required:
+      - noteIds
+      type: object
+      additionalProperties: false
+    TrashBatchOperationResponse:
+      properties: {}
+      additionalProperties:
+        properties:
+          reason:
+            $ref: '#/components/schemas/BatchOperationError'
+          status:
+            type: string
+            enum:
+            - success
+            - failure
+        required:
+        - status
+        type: object
+      type: object
   securitySchemes:
     token:
       type: http

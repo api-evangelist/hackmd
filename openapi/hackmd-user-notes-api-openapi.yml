@@ -236,24 +236,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    NotePermissionRole:
+      enum:
+      - owner
+      - signed_in
+      - guest
+      type: string
     NotePublishType:
       enum:
       - edit
       - view
       - slide
       - book
-      type: string
-    Partial_NoteFeatureValidPermissionRecordType_:
-      properties: {}
-      type: object
-      description: Make all properties in T optional
-    CommentPermissionType:
-      enum:
-      - disabled
-      - forbidden
-      - owners
-      - signed_in_users
-      - everyone
       type: string
     NoteImageUploadResponse:
       properties:
@@ -266,6 +260,25 @@ components:
           type: object
       required:
       - data
+      type: object
+      additionalProperties: false
+    SimpleUserProfile:
+      properties:
+        name:
+          type: string
+        userPath:
+          type: string
+        photo:
+          type: string
+        biography:
+          type:
+          - string
+          - 'null'
+      required:
+      - name
+      - userPath
+      - photo
+      - biography
       type: object
       additionalProperties: false
     Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_:
@@ -326,33 +339,20 @@ components:
       - owners
       - signed_in_users
       type: string
-    NotePermissionRole:
-      enum:
-      - owner
-      - signed_in
-      - guest
-      type: string
-    SimpleUserProfile:
-      properties:
-        name:
-          type: string
-        userPath:
-          type: string
-        photo:
-          type: string
-        biography:
-          type:
-          - string
-          - 'null'
-      required:
-      - name
-      - userPath
-      - photo
-      - biography
-      type: object
-      additionalProperties: false
     FolderPath:
       $ref: '#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_'
+    CommentPermissionType:
+      enum:
+      - disabled
+      - forbidden
+      - owners
+      - signed_in_users
+      - everyone
+      type: string
+    Partial_NoteFeatureValidPermissionRecordType_:
+      properties: {}
+      type: object
+      description: Make all properties in T optional
     NoteType:
       properties:
         folderPaths:

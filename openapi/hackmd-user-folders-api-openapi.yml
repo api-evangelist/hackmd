@@ -197,10 +197,12 @@ components:
         name:
           $ref: '#/components/schemas/FolderName'
       type: object
-    FolderName:
+    FolderIconCodepoint:
       type: string
-      example: Engineering
-      description: Folder name.
+      example: 1F525
+      description: 'Folder icon as an emoji unified codepoint string.
+
+        Examples: `1F525` (🔥), `2764-FE0F` (❤️).'
     UpdateFolderOrderBody:
       properties:
         order:
@@ -209,6 +211,10 @@ components:
       - order
       type: object
       additionalProperties: false
+    FolderName:
+      type: string
+      example: Engineering
+      description: Folder name.
     ApiFolder:
       properties:
         id:
@@ -259,12 +265,12 @@ components:
         name:
           $ref: '#/components/schemas/FolderName'
       type: object
-    FolderIconCodepoint:
+    FolderColorHex:
       type: string
-      example: 1F525
-      description: 'Folder icon as an emoji unified codepoint string.
+      example: '#FF6B6B'
+      description: 'Folder display color in hexadecimal format.
 
-        Examples: `1F525` (🔥), `2764-FE0F` (❤️).'
+        Accepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`.'
     ApiFolderOrder:
       description: 'Per-user display order of folders: maps each parent folder id (or `root`) to
 
@@ -277,12 +283,6 @@ components:
         items:
           type: string
         type: array
-    FolderColorHex:
-      type: string
-      example: '#FF6B6B'
-      description: 'Folder display color in hexadecimal format.
-
-        Accepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`.'
   securitySchemes:
     token:
       type: http

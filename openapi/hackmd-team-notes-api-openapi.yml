@@ -215,6 +215,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    NotePermissionRole:
+      enum:
+      - owner
+      - signed_in
+      - guest
+      type: string
     NotePublishType:
       enum:
       - edit
@@ -222,10 +228,85 @@ components:
       - slide
       - book
       type: string
-    Partial_NoteFeatureValidPermissionRecordType_:
-      properties: {}
+    SimpleUserProfile:
+      properties:
+        name:
+          type: string
+        userPath:
+          type: string
+        photo:
+          type: string
+        biography:
+          type:
+          - string
+          - 'null'
+      required:
+      - name
+      - userPath
+      - photo
+      - biography
       type: object
-      description: Make all properties in T optional
+      additionalProperties: false
+    Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_:
+      properties:
+        id:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        name:
+          type: string
+        icon:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        color:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        parentId:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        clientId:
+          type: string
+      required:
+      - id
+      - name
+      - icon
+      - color
+      - parentId
+      - clientId
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    SuggestEditPermissionType:
+      enum:
+      - disabled
+      - forbidden
+      - owners
+      - signed_in_users
+      type: string
+    FolderPath:
+      $ref: '#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_'
     CommentPermissionType:
       enum:
       - disabled
@@ -234,6 +315,10 @@ components:
       - signed_in_users
       - everyone
       type: string
+    Partial_NoteFeatureValidPermissionRecordType_:
+      properties: {}
+      type: object
+      description: Make all properties in T optional
     NoteType:
       properties:
         folderPaths:
@@ -316,91 +401,6 @@ components:
       - title
       - id
       type: object
-    Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_:
-      properties:
-        id:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        name:
-          type: string
-        icon:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        color:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        parentId:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        clientId:
-          type: string
-      required:
-      - id
-      - name
-      - icon
-      - color
-      - parentId
-      - clientId
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    SuggestEditPermissionType:
-      enum:
-      - disabled
-      - forbidden
-      - owners
-      - signed_in_users
-      type: string
-    SimpleUserProfile:
-      properties:
-        name:
-          type: string
-        userPath:
-          type: string
-        photo:
-          type: string
-        biography:
-          type:
-          - string
-          - 'null'
-      required:
-      - name
-      - userPath
-      - photo
-      - biography
-      type: object
-      additionalProperties: false
-    FolderPath:
-      $ref: '#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_'
-    NotePermissionRole:
-      enum:
-      - owner
-      - signed_in
-      - guest
-      type: string
   securitySchemes:
     token:
       type: http

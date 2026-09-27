@@ -35,11 +35,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TeamVisibilityType:
-      enum:
-      - public
-      - private
-      type: string
     User:
       properties:
         id:
@@ -74,6 +69,11 @@ components:
       - upgraded
       type: object
       additionalProperties: false
+    TeamVisibilityType:
+      enum:
+      - public
+      - private
+      type: string
     Team:
       properties:
         id:
