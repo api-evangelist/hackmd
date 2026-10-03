@@ -35,40 +35,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    User:
-      properties:
-        id:
-          type: string
-        email:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        userPath:
-          type: string
-        photo:
-          type: string
-        teams:
-          items:
-            $ref: '#/components/schemas/Team'
-          type: array
-        Teams:
-          items:
-            $ref: '#/components/schemas/Team'
-          type: array
-        upgraded:
-          type: boolean
-      required:
-      - id
-      - email
-      - name
-      - userPath
-      - photo
-      - teams
-      - upgraded
-      type: object
-      additionalProperties: false
     TeamVisibilityType:
       enum:
       - public
@@ -107,6 +73,40 @@ components:
       - visibility
       - upgraded
       - createdAt
+      type: object
+      additionalProperties: false
+    User:
+      properties:
+        id:
+          type: string
+        email:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        userPath:
+          type: string
+        photo:
+          type: string
+        teams:
+          items:
+            $ref: '#/components/schemas/Team'
+          type: array
+        Teams:
+          items:
+            $ref: '#/components/schemas/Team'
+          type: array
+        upgraded:
+          type: boolean
+      required:
+      - id
+      - email
+      - name
+      - userPath
+      - photo
+      - teams
+      - upgraded
       type: object
       additionalProperties: false
   securitySchemes:

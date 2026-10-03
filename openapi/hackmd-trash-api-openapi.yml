@@ -155,12 +155,6 @@ components:
       - permanentDeletedAt
       type: object
       additionalProperties: false
-    BatchOperationError:
-      enum:
-      - NOT_FOUND
-      - PERMISSION_DENIED
-      - INTERNAL_ERROR
-      type: string
     BatchRestoreTrashBody:
       properties:
         noteIds:
@@ -171,6 +165,12 @@ components:
       - noteIds
       type: object
       additionalProperties: false
+    BatchOperationError:
+      enum:
+      - NOT_FOUND
+      - PERMISSION_DENIED
+      - INTERNAL_ERROR
+      type: string
     TrashBatchOperationResponse:
       properties: {}
       additionalProperties:
