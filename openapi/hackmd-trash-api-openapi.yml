@@ -155,6 +155,21 @@ components:
       - permanentDeletedAt
       type: object
       additionalProperties: false
+    TrashBatchOperationResponse:
+      properties: {}
+      additionalProperties:
+        properties:
+          reason:
+            $ref: '#/components/schemas/BatchOperationError'
+          status:
+            type: string
+            enum:
+            - success
+            - failure
+        required:
+        - status
+        type: object
+      type: object
     BatchRestoreTrashBody:
       properties:
         noteIds:
@@ -171,21 +186,6 @@ components:
       - PERMISSION_DENIED
       - INTERNAL_ERROR
       type: string
-    TrashBatchOperationResponse:
-      properties: {}
-      additionalProperties:
-        properties:
-          reason:
-            $ref: '#/components/schemas/BatchOperationError'
-          status:
-            type: string
-            enum:
-            - success
-            - failure
-        required:
-        - status
-        type: object
-      type: object
   securitySchemes:
     token:
       type: http

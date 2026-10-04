@@ -178,6 +178,38 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ApiFolderOrder:
+      description: 'Per-user display order of folders: maps each parent folder id (or `root`) to
+
+        an ordered list of child folder ids. Keys and values use the same UUIDs as
+
+        {@link ApiFolder.id} (not Yjs clientIds stored internally in preferences).'
+      properties: {}
+      type: object
+      additionalProperties:
+        items:
+          type: string
+        type: array
+    UpdateFolderOrderBody:
+      properties:
+        order:
+          $ref: '#/components/schemas/ApiFolderOrder'
+      required:
+      - order
+      type: object
+      additionalProperties: false
+    FolderColorHex:
+      type: string
+      example: '#FF6B6B'
+      description: 'Folder display color in hexadecimal format.
+
+        Accepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`.'
+    FolderIconCodepoint:
+      type: string
+      example: 1F525
+      description: 'Folder icon as an emoji unified codepoint string.
+
+        Examples: `1F525` (🔥), `2764-FE0F` (❤️).'
     UpdateUserFolderBody:
       properties:
         parentFolderId:
@@ -194,6 +226,23 @@ components:
           type:
           - string
           - 'null'
+        name:
+          $ref: '#/components/schemas/FolderName'
+      type: object
+    FolderName:
+      type: string
+      example: Engineering
+      description: Folder name.
+    CreateUserFolderBody:
+      properties:
+        color:
+          $ref: '#/components/schemas/FolderColorHex'
+        icon:
+          $ref: '#/components/schemas/FolderIconCodepoint'
+        description:
+          type: string
+        parentFolderId:
+          type: string
         name:
           $ref: '#/components/schemas/FolderName'
       type: object
@@ -234,55 +283,6 @@ components:
       - updatedAt
       type: object
       additionalProperties: false
-    ApiFolderOrder:
-      description: 'Per-user display order of folders: maps each parent folder id (or `root`) to
-
-        an ordered list of child folder ids. Keys and values use the same UUIDs as
-
-        {@link ApiFolder.id} (not Yjs clientIds stored internally in preferences).'
-      properties: {}
-      type: object
-      additionalProperties:
-        items:
-          type: string
-        type: array
-    UpdateFolderOrderBody:
-      properties:
-        order:
-          $ref: '#/components/schemas/ApiFolderOrder'
-      required:
-      - order
-      type: object
-      additionalProperties: false
-    FolderColorHex:
-      type: string
-      example: '#FF6B6B'
-      description: 'Folder display color in hexadecimal format.
-
-        Accepts `#RGB`, `#RGBA`, `#RRGGBB`, or `#RRGGBBAA`.'
-    FolderIconCodepoint:
-      type: string
-      example: 1F525
-      description: 'Folder icon as an emoji unified codepoint string.
-
-        Examples: `1F525` (🔥), `2764-FE0F` (❤️).'
-    CreateUserFolderBody:
-      properties:
-        color:
-          $ref: '#/components/schemas/FolderColorHex'
-        icon:
-          $ref: '#/components/schemas/FolderIconCodepoint'
-        description:
-          type: string
-        parentFolderId:
-          type: string
-        name:
-          $ref: '#/components/schemas/FolderName'
-      type: object
-    FolderName:
-      type: string
-      example: Engineering
-      description: Folder name.
   securitySchemes:
     token:
       type: http

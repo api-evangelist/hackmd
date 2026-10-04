@@ -236,57 +236,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_:
-      properties:
-        id:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        name:
-          type: string
-        icon:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        color:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        parentId:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
-        clientId:
-          type: string
-      required:
-      - id
-      - name
-      - icon
-      - color
-      - parentId
-      - clientId
-      type: object
-      description: From T, pick a set of properties whose keys are in the union K
     CommentPermissionType:
       enum:
       - disabled
@@ -295,6 +244,12 @@ components:
       - signed_in_users
       - everyone
       type: string
+    NotePermissionRole:
+      enum:
+      - owner
+      - signed_in
+      - guest
+      type: string
     NotePublishType:
       enum:
       - edit
@@ -302,8 +257,6 @@ components:
       - slide
       - book
       type: string
-    FolderPath:
-      $ref: '#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_'
     NoteType:
       properties:
         folderPaths:
@@ -390,32 +343,6 @@ components:
       properties: {}
       type: object
       description: Make all properties in T optional
-    NotePermissionRole:
-      enum:
-      - owner
-      - signed_in
-      - guest
-      type: string
-    NoteImageUploadResponse:
-      properties:
-        data:
-          properties:
-            link:
-              type: string
-          required:
-          - link
-          type: object
-      required:
-      - data
-      type: object
-      additionalProperties: false
-    SuggestEditPermissionType:
-      enum:
-      - disabled
-      - forbidden
-      - owners
-      - signed_in_users
-      type: string
     SimpleUserProfile:
       properties:
         name:
@@ -433,6 +360,79 @@ components:
       - userPath
       - photo
       - biography
+      type: object
+      additionalProperties: false
+    FolderPath:
+      $ref: '#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_'
+    SuggestEditPermissionType:
+      enum:
+      - disabled
+      - forbidden
+      - owners
+      - signed_in_users
+      type: string
+    Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_:
+      properties:
+        id:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        name:
+          type: string
+        icon:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        color:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        parentId:
+          allOf:
+          - type: string
+          - properties:
+              undefined:
+                type: boolean
+                enum:
+                - true
+            type: object
+        clientId:
+          type: string
+      required:
+      - id
+      - name
+      - icon
+      - color
+      - parentId
+      - clientId
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    NoteImageUploadResponse:
+      properties:
+        data:
+          properties:
+            link:
+              type: string
+          required:
+          - link
+          type: object
+      required:
+      - data
       type: object
       additionalProperties: false
   securitySchemes:
