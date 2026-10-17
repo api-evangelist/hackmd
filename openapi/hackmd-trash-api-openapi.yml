@@ -115,6 +115,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    TrashBatchOperationResponse:
+      properties: {}
+      additionalProperties:
+        properties:
+          reason:
+            $ref: '#/components/schemas/BatchOperationError'
+          status:
+            type: string
+            enum:
+            - success
+            - failure
+        required:
+        - status
+        type: object
+      type: object
     ApiTrashNote:
       properties:
         id:
@@ -155,21 +170,6 @@ components:
       - permanentDeletedAt
       type: object
       additionalProperties: false
-    TrashBatchOperationResponse:
-      properties: {}
-      additionalProperties:
-        properties:
-          reason:
-            $ref: '#/components/schemas/BatchOperationError'
-          status:
-            type: string
-            enum:
-            - success
-            - failure
-        required:
-        - status
-        type: object
-      type: object
     BatchRestoreTrashBody:
       properties:
         noteIds:
