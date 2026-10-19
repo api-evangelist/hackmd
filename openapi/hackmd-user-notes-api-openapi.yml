@@ -27,6 +27,30 @@ paths:
                 items:
                   $ref: '#/components/schemas/NoteType'
                 type: array
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: List all notes for the current user
       tags:
       - User Notes
@@ -39,12 +63,65 @@ paths:
       operationId: CreateNote
       responses:
         '201':
-          description: Created
+          description: ''
           content:
             application/json:
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/SingleNote'
         '207':
-          description: Multi-Status
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNoteMultiStatusResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiBadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiValidationError'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Create a new note for the current user
       tags:
       - User Notes
@@ -66,7 +143,7 @@ paths:
                   permalink:
                     type: string
                   noteFeatures:
-                    $ref: '#/components/schemas/Partial_NoteFeatureValidPermissionRecordType_'
+                    $ref: '#/components/schemas/ApiNoteFeatures'
                   suggestEditPermission:
                     $ref: '#/components/schemas/SuggestEditPermissionType'
                   commentPermission:
@@ -95,10 +172,59 @@ paths:
       operationId: GetNote
       responses:
         '200':
-          description: Ok
+          description: ''
           content:
             application/json:
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/SingleNote'
+          headers:
+            ETag:
+              schema:
+                type: string
+              required: true
+        '304':
+          description: ''
+          headers:
+            ETag:
+              schema:
+                type: string
+              required: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Get a single note for the current user (or team note if accessible)
       tags:
       - User Notes
@@ -111,6 +237,12 @@ paths:
         required: true
         schema:
           type: string
+      - description: Return 304 when this ETag matches the current note.
+        in: header
+        name: If-None-Match
+        required: false
+        schema:
+          type: string
       summary: Get note
       x-summary-source: derived
     delete:
@@ -118,6 +250,42 @@ paths:
       responses:
         '204':
           description: No content
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiBadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Delete a note for the current user
       tags:
       - User Notes
@@ -136,10 +304,55 @@ paths:
       operationId: UpdateNote
       responses:
         '202':
-          description: Accepted
+          description: ''
+        '400':
+          description: ''
           content:
             application/json:
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/ApiBadRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiValidationError'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Update a note's content or permissions for the current user
       tags:
       - User Notes
@@ -153,7 +366,7 @@ paths:
         schema:
           type: string
       requestBody:
-        description: The properties to update on the note.
+        description: The properties to update on the note. Omit description to leave it unchanged, use a string (including an empty string) to set it, or null to remove its metadata.
         required: true
         content:
           application/json:
@@ -172,7 +385,9 @@ paths:
                 content:
                   type: string
                 description:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                 tags:
                   items:
                     type: string
@@ -180,7 +395,7 @@ paths:
                 title:
                   type: string
               type: object
-              description: The properties to update on the note.
+              description: The properties to update on the note. Omit description to leave it unchanged, use a string (including an empty string) to set it, or null to remove its metadata.
       summary: Update note
       x-summary-source: derived
   /notes/{noteId}/images:
@@ -188,27 +403,63 @@ paths:
       operationId: UploadNoteImage
       responses:
         '201':
-          description: Created
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteImageUploadResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
           content:
             application/json:
               schema:
                 anyOf:
-                - $ref: '#/components/schemas/NoteImageUploadResponse'
-                - {}
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
+                - $ref: '#/components/schemas/ApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
         '413':
           description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
         '415':
           description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
         '422':
-          description: Validation Failed
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+                - $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Upload an image for a note.
       tags:
       - User Notes
@@ -236,52 +487,208 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ApiValidationError:
+      properties:
+        message:
+          type: string
+          enum:
+          - Validation Failed
+        details:
+          $ref: '#/components/schemas/Record_string.ApiValidationFieldError_'
+      required:
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    SingleNote:
+      properties:
+        folderPaths:
+          items:
+            $ref: '#/components/schemas/FolderPath'
+          type: array
+        writePermission:
+          $ref: '#/components/schemas/NotePermissionRole'
+        readPermission:
+          $ref: '#/components/schemas/NotePermissionRole'
+        shortId:
+          type: string
+        publishLink:
+          type: string
+        permalink:
+          type:
+          - string
+          - 'null'
+        teamPath:
+          type:
+          - string
+          - 'null'
+        userPath:
+          type:
+          - string
+          - 'null'
+        publishedAt:
+          type:
+          - number
+          - 'null'
+          format: double
+        publishType:
+          $ref: '#/components/schemas/NotePublishType'
+        lastChangeUser:
+          allOf:
+          - $ref: '#/components/schemas/SimpleUserProfile'
+        tagsUpdatedAt:
+          type:
+          - number
+          - 'null'
+          format: double
+        titleUpdatedAt:
+          type:
+          - number
+          - 'null'
+          format: double
+        createdAt:
+          type: number
+          format: double
+        lastChangedAt:
+          type: number
+          format: double
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        title:
+          type: string
+        id:
+          type: string
+        content:
+          type: string
+      required:
+      - writePermission
+      - readPermission
+      - shortId
+      - publishLink
+      - permalink
+      - teamPath
+      - userPath
+      - publishedAt
+      - publishType
+      - lastChangeUser
+      - tagsUpdatedAt
+      - titleUpdatedAt
+      - createdAt
+      - lastChangedAt
+      - description
+      - tags
+      - title
+      - id
+      - content
+      type: object
+      additionalProperties: false
     NotePermissionRole:
       enum:
       - owner
       - signed_in
       - guest
       type: string
-    Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_:
+    CommentPermissionType:
+      enum:
+      - disabled
+      - forbidden
+      - owners
+      - signed_in_users
+      - everyone
+      type: string
+    CreateNoteMultiStatusResponse:
+      properties:
+        note:
+          $ref: '#/components/schemas/SingleNote'
+        error:
+          type: string
+      required:
+      - note
+      - error
+      type: object
+      additionalProperties: false
+    ApiErrorResponse:
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    ApiRateLimitErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiQuotaErrorResponse'
+    ApiValidationFieldError:
+      properties:
+        message:
+          type: string
+        value: {}
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    SuggestEditPermissionType:
+      enum:
+      - disabled
+      - forbidden
+      - owners
+      - signed_in_users
+      type: string
+    ApiRequestErrorResponse:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    ApiQuotaErrorResponse:
+      properties:
+        error:
+          properties:
+            upgradeUrl:
+              type: string
+            helpUrl:
+              type: string
+            message:
+              type: string
+            code:
+              type: string
+              enum:
+              - quota_exceeded
+          required:
+          - upgradeUrl
+          - helpUrl
+          - message
+          - code
+          type: object
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    FolderPath:
       properties:
         id:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
+          type: string
         name:
           type: string
         icon:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
+          type:
+          - string
+          - 'null'
         color:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
+          type:
+          - string
+          - 'null'
         parentId:
-          allOf:
-          - type: string
-          - properties:
-              undefined:
-                type: boolean
-                enum:
-                - true
-            type: object
+          type:
+          - string
+          - 'null'
         clientId:
           type: string
       required:
@@ -292,22 +699,46 @@ components:
       - parentId
       - clientId
       type: object
-      description: From T, pick a set of properties whose keys are in the union K
-    SuggestEditPermissionType:
-      enum:
-      - disabled
-      - forbidden
-      - owners
-      - signed_in_users
-      type: string
-    CommentPermissionType:
-      enum:
-      - disabled
-      - forbidden
-      - owners
-      - signed_in_users
-      - everyone
-      type: string
+      additionalProperties: false
+    ApiNoteFeatures:
+      properties:
+        emoji-reply:
+          type: string
+          enum:
+          - disabled
+          - signed_in_users
+        citation:
+          type: string
+          enum:
+          - disabled
+          - signed_in_users
+      type: object
+      additionalProperties: false
+    SimpleUserProfile:
+      properties:
+        name:
+          type: string
+        userPath:
+          type: string
+        photo:
+          type: string
+        biography:
+          type:
+          - string
+          - 'null'
+      required:
+      - name
+      - userPath
+      - photo
+      - biography
+      type: object
+      additionalProperties: false
+    Record_string.ApiValidationFieldError_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/ApiValidationFieldError'
+      type: object
+      description: Construct a type with a set of properties K of type T
     NoteImageUploadResponse:
       properties:
         data:
@@ -321,10 +752,14 @@ components:
       - data
       type: object
       additionalProperties: false
-    Partial_NoteFeatureValidPermissionRecordType_:
-      properties: {}
-      type: object
-      description: Make all properties in T optional
+    ApiBadRequestResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiRequestErrorResponse'
+    ApiServerErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiRequestErrorResponse'
     NoteType:
       properties:
         folderPaths:
@@ -407,25 +842,6 @@ components:
       - title
       - id
       type: object
-    SimpleUserProfile:
-      properties:
-        name:
-          type: string
-        userPath:
-          type: string
-        photo:
-          type: string
-        biography:
-          type:
-          - string
-          - 'null'
-      required:
-      - name
-      - userPath
-      - photo
-      - biography
-      type: object
-      additionalProperties: false
     NotePublishType:
       enum:
       - edit
@@ -433,8 +849,6 @@ components:
       - slide
       - book
       type: string
-    FolderPath:
-      $ref: '#/components/schemas/Pick_FolderAttributes.id-or-name-or-icon-or-color-or-parentId-or-clientId_'
   securitySchemes:
     token:
       type: http

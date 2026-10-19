@@ -1,0 +1,897 @@
+openapi: 3.2.0
+info:
+  title: HackMD Open Webhooks API
+  version: 1.0.0
+  description: HackMD OpenAPI
+  license:
+    name: UNLICENSED
+  contact:
+    name: HackMD Team
+    email: support@hackmd.io
+servers:
+- url: /v1
+  description: API Server
+tags:
+- name: Webhooks
+  description: Operations for managing webhooks in a personal workspace.
+paths:
+  /webhooks:
+    get:
+      operationId: ListWebhooks
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ApiWebhook'
+                type: array
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: List webhooks in the current user's workspace.
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters: []
+      summary: List webhooks
+      x-summary-source: derived
+    post:
+      operationId: CreateWebhook
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ApiWebhook'
+                - properties:
+                    secret:
+                      type: string
+                  required:
+                  - secret
+                  type: object
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Folder not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiValidationError'
+        '429':
+          description: Webhook limit reached
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: 'Create a webhook in the current user''s workspace.
+
+        The signing secret is returned only once and cannot be retrieved later.'
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiWebhookBody'
+      summary: Create webhook
+      x-summary-source: derived
+  /webhooks/{hookId}:
+    get:
+      operationId: GetWebhook
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiWebhook'
+        '400':
+          description: Invalid webhook ID
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: Get a webhook in the current user's workspace.
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: hookId
+        required: true
+        schema:
+          type: string
+      summary: Get webhook
+      x-summary-source: derived
+    patch:
+      operationId: UpdateWebhook
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiWebhook'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiValidationError'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: 'Update a webhook. At least one of name, url, or active is required.
+
+        Scope and event selection cannot be changed.'
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: hookId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApiWebhookBody'
+      summary: Update webhook
+      x-summary-source: derived
+    delete:
+      operationId: DeleteWebhook
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Invalid webhook ID
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: Delete a webhook.
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: hookId
+        required: true
+        schema:
+          type: string
+      summary: Delete webhook
+      x-summary-source: derived
+  /webhooks/{hookId}/ping:
+    post:
+      operationId: PingWebhook
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Invalid webhook ID
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Too many ping requests
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: Send a test delivery. Read the result from the deliveries endpoint.
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: hookId
+        required: true
+        schema:
+          type: string
+      summary: Ping webhook
+      x-summary-source: derived
+  /webhooks/{hookId}/deliveries:
+    get:
+      operationId: ListWebhookDeliveries
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_ApiWebhookDelivery_'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: List webhook deliveries within the workspace plan's retention window.
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: hookId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: page
+        required: false
+        schema:
+          $ref: '#/components/schemas/ApiWebhookPage'
+      - in: query
+        name: limit
+        required: false
+        schema:
+          $ref: '#/components/schemas/ApiWebhookLimit'
+      summary: List webhook deliveries
+      x-summary-source: derived
+  /webhooks/{hookId}/deliveries/export:
+    get:
+      operationId: ExportWebhookDeliveries
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/x-ndjson:
+              schema:
+                type: string
+        '400':
+          description: Invalid webhook ID
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Webhook not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: Download webhook deliveries as newline-delimited JSON.
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: hookId
+        required: true
+        schema:
+          type: string
+      summary: Export webhook deliveries
+      x-summary-source: derived
+  /webhooks/{hookId}/deliveries/{deliveryId}:
+    get:
+      operationId: GetWebhookDelivery
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiWebhookDelivery'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Delivery not found
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/WebhookApiErrorResponse'
+                - $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: Get a webhook delivery within the workspace plan's retention window.
+      tags:
+      - Webhooks
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: hookId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deliveryId
+        required: true
+        schema:
+          type: string
+      summary: Get webhook delivery
+      x-summary-source: derived
+components:
+  schemas:
+    ApiValidationError:
+      properties:
+        message:
+          type: string
+          enum:
+          - Validation Failed
+        details:
+          $ref: '#/components/schemas/Record_string.ApiValidationFieldError_'
+      required:
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    UpdateApiWebhookBody:
+      $ref: '#/components/schemas/UpdateWebhookData'
+    PaginatedResponse_ApiWebhookDelivery_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ApiWebhookDelivery'
+          type: array
+        meta:
+          allOf:
+          - $ref: '#/components/schemas/PaginatedQuery'
+          - properties:
+              totalPages:
+                type: number
+                format: double
+              total:
+                type: number
+                format: double
+            type: object
+      required:
+      - data
+      - meta
+      type: object
+      additionalProperties: false
+    ApiErrorResponse:
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    ApiWebhookLimit:
+      type: integer
+      format: int32
+      default: 20
+      minimum: 1
+      maximum: 100
+    ApiRateLimitErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiQuotaErrorResponse'
+    ApiValidationFieldError:
+      properties:
+        message:
+          type: string
+        value: {}
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    CreateApiWebhookBody:
+      allOf:
+      - $ref: '#/components/schemas/CreateWebhookData'
+      - properties:
+          active:
+            type: boolean
+        type: object
+    PaginatedQuery:
+      properties:
+        limit:
+          type: number
+          format: double
+        page:
+          type: number
+          format: double
+      required:
+      - limit
+      - page
+      type: object
+      additionalProperties: false
+    ApiWebhookScope:
+      anyOf:
+      - properties:
+          type:
+            type: string
+            enum:
+            - workspace
+        required:
+        - type
+        type: object
+      - properties:
+          folderId:
+            type: string
+          type:
+            type: string
+            enum:
+            - folder
+        required:
+        - folderId
+        - type
+        type: object
+    WebhookApiErrorResponse:
+      properties:
+        error:
+          properties:
+            message:
+              type: string
+            code:
+              type: string
+          required:
+          - message
+          - code
+          type: object
+      required:
+      - error
+      type: object
+    ApiRequestErrorResponse:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    ApiWebhook:
+      properties:
+        updatedAt:
+          type: number
+          format: double
+        createdAt:
+          type: number
+          format: double
+        eventDeliveryMode:
+          type: string
+          enum:
+          - all_supported_events
+        deliveryPolicyReason:
+          type:
+          - string
+          - 'null'
+          enum:
+          - unsafe_destination
+          - suspicious_pattern
+          - policy_violation
+          - null
+        deliveryPolicyStatus:
+          type: string
+          enum:
+          - normal
+          - suppressed
+        configuredStatusReason:
+          type:
+          - string
+          - 'null'
+          enum:
+          - scope_deleted
+          - null
+        configuredStatus:
+          type: string
+          enum:
+          - active
+          - disabled
+        scope:
+          $ref: '#/components/schemas/ApiWebhookScope'
+        url:
+          type: string
+        name:
+          type: string
+        id:
+          type: string
+      required:
+      - updatedAt
+      - createdAt
+      - eventDeliveryMode
+      - deliveryPolicyReason
+      - deliveryPolicyStatus
+      - configuredStatusReason
+      - configuredStatus
+      - scope
+      - url
+      - name
+      - id
+      type: object
+    ApiQuotaErrorResponse:
+      properties:
+        error:
+          properties:
+            upgradeUrl:
+              type: string
+            helpUrl:
+              type: string
+            message:
+              type: string
+            code:
+              type: string
+              enum:
+              - quota_exceeded
+          required:
+          - upgradeUrl
+          - helpUrl
+          - message
+          - code
+          type: object
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    ApiWebhookPage:
+      type: integer
+      format: int32
+      default: 1
+      minimum: 1
+    Record_string.ApiValidationFieldError_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/ApiValidationFieldError'
+      type: object
+      description: Construct a type with a set of properties K of type T
+    WebhookDeliveryStatusCategory:
+      type: string
+      enum:
+      - delivered
+      - delivery_issue
+      - not_delivered
+    CreateWebhookData:
+      properties:
+        scope:
+          anyOf:
+          - properties:
+              type:
+                type: string
+                enum:
+                - workspace
+            required:
+            - type
+            type: object
+          - properties:
+              folderId:
+                type: string
+              type:
+                type: string
+                enum:
+                - folder
+            required:
+            - folderId
+            - type
+            type: object
+        url:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+      required:
+      - scope
+      - url
+      type: object
+    ApiWebhookDelivery:
+      properties:
+        deliveredAt:
+          type:
+          - number
+          - 'null'
+          format: double
+        createdAt:
+          type: number
+          format: double
+        latencyMs:
+          type:
+          - number
+          - 'null'
+          format: double
+        errorMessage:
+          type:
+          - string
+          - 'null'
+        errorCategory:
+          type:
+          - string
+          - 'null'
+        httpStatus:
+          type:
+          - number
+          - 'null'
+          format: double
+        statusCategory:
+          $ref: '#/components/schemas/WebhookDeliveryStatusCategory'
+        status:
+          type: string
+          enum:
+          - success
+          - failed
+          - skipped
+        attemptKind:
+          type: string
+          enum:
+          - event
+          - ping
+        eventType:
+          type: string
+        id:
+          type: string
+      required:
+      - deliveredAt
+      - createdAt
+      - latencyMs
+      - errorMessage
+      - errorCategory
+      - httpStatus
+      - statusCategory
+      - status
+      - attemptKind
+      - eventType
+      - id
+      type: object
+    UpdateWebhookData:
+      properties:
+        active:
+          type: boolean
+        url:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+      type: object
+    ApiServerErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiRequestErrorResponse'
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer

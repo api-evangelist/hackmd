@@ -213,6 +213,46 @@ apis:
     url: authentication/hackmd-authentication.yml
   - type: RateLimits
     url: rate-limits/hackmd-rate-limits.yml
+- aid: hackmd:hackmd-comments-api
+  name: HackMD Comments API
+  description: Operations for reading and resolving note comments.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-comments-api-openapi.yml
+- aid: hackmd:hackmd-team-webhooks-api
+  name: HackMD Team Webhooks API
+  description: Operations for managing webhooks in a team workspace.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Team Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-team-webhooks-api-openapi.yml
+- aid: hackmd:hackmd-versions-api
+  name: HackMD Versions API
+  description: Operations for listing, retrieving, comparing, creating, and updating note versions.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-versions-api-openapi.yml
+- aid: hackmd:hackmd-webhooks-api
+  name: HackMD Webhooks API
+  description: Operations for managing webhooks in a personal workspace.
+  humanURL: https://hackmd.io/@docs/developer-portal
+  baseURL: https://api.hackmd.io/v1
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/hackmd-webhooks-api-openapi.yml
 common:
 - type: Website
   url: https://hackmd.io/

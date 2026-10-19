@@ -17,7 +17,7 @@ tags:
 paths:
   /me:
     get:
-      operationId: GetCurrentUser
+      operationId: GetMe
       responses:
         '200':
           description: Ok
@@ -25,54 +25,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Get the current user's profile
       tags:
       - Profile
       security:
       - token: []
       parameters: []
-      summary: Get current user
+      summary: Get me
       x-summary-source: derived
 components:
   schemas:
-    TeamVisibilityType:
-      enum:
-      - public
-      - private
-      type: string
-    Team:
+    ApiErrorResponse:
       properties:
-        id:
+        error:
           type: string
-        ownerId:
-          type: string
-        name:
-          type: string
-        logo:
-          type: string
-        path:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        visibility:
-          $ref: '#/components/schemas/TeamVisibilityType'
-        upgraded:
-          type: boolean
-        createdAt:
-          type: number
-          format: double
       required:
-      - id
-      - ownerId
-      - name
-      - logo
-      - path
-      - description
-      - visibility
-      - upgraded
-      - createdAt
+      - error
       type: object
       additionalProperties: false
     User:
@@ -107,6 +99,88 @@ components:
       - photo
       - teams
       - upgraded
+      type: object
+      additionalProperties: false
+    ApiRequestErrorResponse:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    ApiRateLimitErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiQuotaErrorResponse'
+    TeamVisibilityType:
+      enum:
+      - public
+      - private
+      type: string
+    ApiQuotaErrorResponse:
+      properties:
+        error:
+          properties:
+            upgradeUrl:
+              type: string
+            helpUrl:
+              type: string
+            message:
+              type: string
+            code:
+              type: string
+              enum:
+              - quota_exceeded
+          required:
+          - upgradeUrl
+          - helpUrl
+          - message
+          - code
+          type: object
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    ApiServerErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiRequestErrorResponse'
+    Team:
+      properties:
+        id:
+          type: string
+        ownerId:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        logo:
+          type: string
+        path:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        visibility:
+          $ref: '#/components/schemas/TeamVisibilityType'
+        upgraded:
+          type: boolean
+        createdAt:
+          type: number
+          format: double
+      required:
+      - id
+      - ownerId
+      - name
+      - logo
+      - path
+      - description
+      - visibility
+      - upgraded
+      - createdAt
       type: object
       additionalProperties: false
   securitySchemes:

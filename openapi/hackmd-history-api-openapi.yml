@@ -24,8 +24,31 @@ paths:
           content:
             application/json:
               schema:
-                items: {}
-                type: array
+                $ref: '#/components/schemas/GetUserHistory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Get note history for the current user
       tags:
       - History
@@ -42,6 +65,202 @@ paths:
       summary: Get history
       x-summary-source: derived
 components:
+  schemas:
+    ApiErrorResponse:
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    SimpleUserProfile:
+      properties:
+        name:
+          type: string
+        userPath:
+          type: string
+        photo:
+          type: string
+        biography:
+          type:
+          - string
+          - 'null'
+      required:
+      - name
+      - userPath
+      - photo
+      - biography
+      type: object
+      additionalProperties: false
+    ApiRequestErrorResponse:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    ApiRateLimitErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiQuotaErrorResponse'
+    GetUserHistory:
+      items:
+        $ref: '#/components/schemas/Note'
+      type: array
+    ApiQuotaErrorResponse:
+      properties:
+        error:
+          properties:
+            upgradeUrl:
+              type: string
+            helpUrl:
+              type: string
+            message:
+              type: string
+            code:
+              type: string
+              enum:
+              - quota_exceeded
+          required:
+          - upgradeUrl
+          - helpUrl
+          - message
+          - code
+          type: object
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    FolderPath:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        icon:
+          type:
+          - string
+          - 'null'
+        color:
+          type:
+          - string
+          - 'null'
+        parentId:
+          type:
+          - string
+          - 'null'
+        clientId:
+          type: string
+      required:
+      - id
+      - name
+      - icon
+      - color
+      - parentId
+      - clientId
+      type: object
+      additionalProperties: false
+    NotePermissionRole:
+      enum:
+      - owner
+      - signed_in
+      - guest
+      type: string
+    ApiServerErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiRequestErrorResponse'
+    Note:
+      properties:
+        folderPaths:
+          items:
+            $ref: '#/components/schemas/FolderPath'
+          type: array
+        writePermission:
+          $ref: '#/components/schemas/NotePermissionRole'
+        readPermission:
+          $ref: '#/components/schemas/NotePermissionRole'
+        shortId:
+          type: string
+        publishLink:
+          type: string
+        permalink:
+          type:
+          - string
+          - 'null'
+        teamPath:
+          type:
+          - string
+          - 'null'
+        userPath:
+          type:
+          - string
+          - 'null'
+        publishedAt:
+          type:
+          - number
+          - 'null'
+          format: double
+        publishType:
+          $ref: '#/components/schemas/NotePublishType'
+        lastChangeUser:
+          allOf:
+          - $ref: '#/components/schemas/SimpleUserProfile'
+        tagsUpdatedAt:
+          type:
+          - number
+          - 'null'
+          format: double
+        titleUpdatedAt:
+          type:
+          - number
+          - 'null'
+          format: double
+        createdAt:
+          type: number
+          format: double
+        lastChangedAt:
+          type: number
+          format: double
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        title:
+          type: string
+        id:
+          type: string
+      required:
+      - writePermission
+      - readPermission
+      - shortId
+      - publishLink
+      - permalink
+      - teamPath
+      - userPath
+      - publishedAt
+      - publishType
+      - lastChangeUser
+      - tagsUpdatedAt
+      - titleUpdatedAt
+      - createdAt
+      - lastChangedAt
+      - description
+      - tags
+      - title
+      - id
+      type: object
+    NotePublishType:
+      enum:
+      - edit
+      - view
+      - slide
+      - book
+      type: string
   securitySchemes:
     token:
       type: http

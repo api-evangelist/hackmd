@@ -17,7 +17,7 @@ tags:
 paths:
   /trash:
     get:
-      operationId: ListPersonalTrash
+      operationId: ListTrash
       responses:
         '200':
           description: Ok
@@ -27,32 +27,84 @@ paths:
                 items:
                   $ref: '#/components/schemas/ApiTrashNote'
                 type: array
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: List trashed notes in your personal workspace (same data as the internal trash API).
       tags:
       - Trash
       security:
       - token: []
       parameters: []
-      summary: List personal trash
+      summary: List trash
       x-summary-source: derived
   /trash/batch-restore:
     put:
       operationId: BatchRestore
       responses:
         '200':
-          description: Ok
+          description: ''
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TrashBatchOperationResponse'
         '207':
-          description: Multi-Status
+          description: ''
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TrashBatchOperationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
         '404':
-          description: Not Found
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Restore multiple notes from trash in one request.
       tags:
       - Trash
@@ -72,7 +124,43 @@ paths:
       operationId: RestoreNote
       responses:
         '204':
-          description: No content
+          description: ''
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: Restore a single note from trash.
       tags:
       - Trash
@@ -92,13 +180,49 @@ paths:
       operationId: ListTeamTrash
       responses:
         '200':
-          description: Ok
+          description: ''
           content:
             application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/ApiTrashNote'
                 type: array
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
       description: List trashed notes in a team workspace (team admin only; same rules as the internal API).
       tags:
       - Trash
@@ -115,21 +239,36 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TrashBatchOperationResponse:
-      properties: {}
-      additionalProperties:
-        properties:
-          reason:
-            $ref: '#/components/schemas/BatchOperationError'
-          status:
-            type: string
-            enum:
-            - success
-            - failure
-        required:
-        - status
-        type: object
+    ApiErrorResponse:
+      properties:
+        error:
+          type: string
+      required:
+      - error
       type: object
+      additionalProperties: false
+    ApiRequestErrorResponse:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    ApiRateLimitErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiQuotaErrorResponse'
+    BatchRestoreTrashBody:
+      properties:
+        noteIds:
+          items:
+            type: string
+          type: array
+      required:
+      - noteIds
+      type: object
+      additionalProperties: false
     ApiTrashNote:
       properties:
         id:
@@ -170,16 +309,49 @@ components:
       - permanentDeletedAt
       type: object
       additionalProperties: false
-    BatchRestoreTrashBody:
+    ApiQuotaErrorResponse:
       properties:
-        noteIds:
-          items:
-            type: string
-          type: array
+        error:
+          properties:
+            upgradeUrl:
+              type: string
+            helpUrl:
+              type: string
+            message:
+              type: string
+            code:
+              type: string
+              enum:
+              - quota_exceeded
+          required:
+          - upgradeUrl
+          - helpUrl
+          - message
+          - code
+          type: object
       required:
-      - noteIds
+      - error
       type: object
       additionalProperties: false
+    TrashBatchOperationResponse:
+      properties: {}
+      additionalProperties:
+        properties:
+          reason:
+            $ref: '#/components/schemas/BatchOperationError'
+          status:
+            type: string
+            enum:
+            - success
+            - failure
+        required:
+        - status
+        type: object
+      type: object
+    ApiServerErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiRequestErrorResponse'
     BatchOperationError:
       enum:
       - NOT_FOUND

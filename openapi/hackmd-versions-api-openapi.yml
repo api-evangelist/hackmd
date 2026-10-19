@@ -1,0 +1,770 @@
+openapi: 3.2.0
+info:
+  title: HackMD Open Versions API
+  version: 1.0.0
+  description: HackMD OpenAPI
+  license:
+    name: UNLICENSED
+  contact:
+    name: HackMD Team
+    email: support@hackmd.io
+servers:
+- url: /v1
+  description: API Server
+tags:
+- name: Versions
+  description: Operations for listing, retrieving, comparing, creating, and updating note versions.
+paths:
+  /notes/{noteId}/versions:
+    get:
+      operationId: ListVersions
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetNoteVersions'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ApiError'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: List saved versions for a note.
+      summary: List note versions
+      tags:
+      - Versions
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: named_only
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: q
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: created_by
+        required: false
+        schema:
+          type: string
+      - description: Return versions created at or after this ISO-8601 datetime.
+        in: query
+        name: created_after
+        required: false
+        schema:
+          type: string
+      - description: Return versions created at or before this ISO-8601 datetime.
+        in: query
+        name: created_before
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: double
+          type: number
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          format: double
+          type: number
+    post:
+      operationId: CreateVersion
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteVersionMetadata'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ApiError'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '409':
+          description: No content change or version already named
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNoteVersionConflictError'
+              examples:
+                Example 1:
+                  value:
+                    error_code: no_content_change
+                    message: Current note content has no changes to save.
+                    latest_version_id: 01234567-89ab-4def-8123-456789abcdef
+                    latest_name_source: user
+                Example 2:
+                  value:
+                    error_code: version_already_named
+                    message: The version already has a name.
+                    version_id: 01234567-89ab-4def-8123-456789abcdef
+                    name: Release checkpoint
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: 'Create a named version from live note content or an existing saved version. When
+
+        live note content has changed, this creates and names a new saved version. When
+
+        live content matches the latest system version, that version is named in place and
+
+        returned with 201. When it matches the latest user-named version, the response is
+
+        409 `no_content_change`. Naming an already named `version:{id}` returns 409
+
+        `version_already_named`.'
+      summary: Create a named note version
+      tags:
+      - Versions
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNoteVersionBody'
+    patch:
+      operationId: UpdateVersion
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteVersionMetadata'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ApiError'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Version is not named
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionNotNamedError'
+              examples:
+                Example 1:
+                  value:
+                    error_code: version_not_named
+                    message: The version is not named. Use POST with base=version:{id} first.
+                    version_id: 01234567-89ab-4def-8123-456789abcdef
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: 'Update an existing named version''s metadata with `PATCH /notes/{noteId}/versions`
+
+        and a `base` body field formatted as `version:{id}`. The item path
+
+        `/notes/{noteId}/versions/{versionId}` does not support PATCH.'
+      summary: Update named version metadata
+      tags:
+      - Versions
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNoteVersionBody'
+  /notes/{noteId}/versions/compare:
+    get:
+      operationId: CompareVersions
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompareNoteVersions'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ApiError'
+                - $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Validation failed or version content unavailable
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/ApiError'
+                - $ref: '#/components/schemas/ApiValidationError'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: Compare two saved versions or a saved version with live note content.
+      summary: Compare note versions
+      tags:
+      - Versions
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+      - description: Required comparison source. Use note_content or version:{id}.
+        in: query
+        name: base
+        required: true
+        schema:
+          type: string
+      - description: Required comparison target. Use note_content or version:{id}.
+        in: query
+        name: target
+        required: true
+        schema:
+          type: string
+  /notes/{noteId}/versions/{versionId}:
+    get:
+      operationId: GetVersion
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteVersion'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRequestErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Rate limit or workspace quota exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRateLimitErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerErrorResponse'
+      description: Get one saved version with reconstructed content when available.
+      summary: Get a note version
+      tags:
+      - Versions
+      security:
+      - token: []
+      parameters:
+      - in: path
+        name: noteId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: versionId
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    VersionNotNamedError:
+      properties:
+        error_code:
+          type: string
+          enum:
+          - version_not_named
+        message:
+          type: string
+        version_id:
+          type: string
+      required:
+      - error_code
+      - message
+      - version_id
+      type: object
+      additionalProperties: false
+    NoContentChangeError:
+      properties:
+        error_code:
+          type: string
+          enum:
+          - no_content_change
+        message:
+          type: string
+        latest_version_id:
+          type: string
+        latest_name_source:
+          type: string
+          enum:
+          - system
+          - user
+      required:
+      - error_code
+      - message
+      - latest_version_id
+      - latest_name_source
+      type: object
+      additionalProperties: false
+    NoteVersion:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        name_source:
+          type: string
+          enum:
+          - user
+          - system
+        description:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: string
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/NoteVersionUser'
+        authorship:
+          items:
+            $ref: '#/components/schemas/NoteVersionUser'
+          type: array
+        content_available:
+          type: boolean
+        content:
+          type: string
+      required:
+      - id
+      - name
+      - name_source
+      - created_at
+      - created_by
+      - authorship
+      - content_available
+      type: object
+      additionalProperties: false
+    ApiValidationError:
+      properties:
+        message:
+          type: string
+          enum:
+          - Validation Failed
+        details:
+          $ref: '#/components/schemas/Record_string.ApiValidationFieldError_'
+      required:
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    UpdateNoteVersionBody:
+      anyOf:
+      - properties:
+          description:
+            type: string
+            maxLength: 500
+          name:
+            type: string
+            minLength: 1
+            maxLength: 80
+            pattern: \S
+          base:
+            type: string
+            description: Existing named version to update, formatted as version:{id}.
+        required:
+        - name
+        - base
+        type: object
+      - properties:
+          description:
+            type: string
+            maxLength: 500
+          name:
+            type: string
+            minLength: 1
+            maxLength: 80
+            pattern: \S
+          base:
+            type: string
+            description: Existing named version to update, formatted as version:{id}.
+        required:
+        - description
+        - base
+        type: object
+    NoteVersionUser:
+      properties:
+        user_id:
+          type: string
+        display_name:
+          type: string
+        photo:
+          type: string
+      required:
+      - user_id
+      - display_name
+      type: object
+      additionalProperties: false
+    ApiErrorResponse:
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    ApiRateLimitErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiQuotaErrorResponse'
+    CreateNoteVersionBody:
+      properties:
+        base:
+          type: string
+          description: Saved content to name. Accepts note_content or version:{id}.
+          default: note_content
+        name:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: \S
+        description:
+          type: string
+          maxLength: 500
+      required:
+      - name
+      type: object
+      additionalProperties: false
+    CompareNoteVersions:
+      properties:
+        unified_diff:
+          type: string
+      required:
+      - unified_diff
+      type: object
+      additionalProperties: false
+    ApiValidationFieldError:
+      properties:
+        message:
+          type: string
+        value: {}
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    ApiRequestErrorResponse:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+      additionalProperties: false
+    CreateNoteVersionConflictError:
+      anyOf:
+      - $ref: '#/components/schemas/NoContentChangeError'
+      - $ref: '#/components/schemas/VersionAlreadyNamedError'
+    NoteVersionMetadata:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        name_source:
+          type: string
+          enum:
+          - user
+          - system
+        description:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: string
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/NoteVersionUser'
+        authorship:
+          items:
+            $ref: '#/components/schemas/NoteVersionUser'
+          type: array
+        content_available:
+          type: boolean
+      required:
+      - id
+      - name
+      - name_source
+      - created_at
+      - created_by
+      - authorship
+      - content_available
+      type: object
+      additionalProperties: false
+    ApiQuotaErrorResponse:
+      properties:
+        error:
+          properties:
+            upgradeUrl:
+              type: string
+            helpUrl:
+              type: string
+            message:
+              type: string
+            code:
+              type: string
+              enum:
+              - quota_exceeded
+          required:
+          - upgradeUrl
+          - helpUrl
+          - message
+          - code
+          type: object
+      required:
+      - error
+      type: object
+      additionalProperties: false
+    ApiError:
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        unavailable_ref:
+          type: string
+      required:
+      - error_code
+      - message
+      type: object
+      additionalProperties: false
+    VersionAlreadyNamedError:
+      properties:
+        error_code:
+          type: string
+          enum:
+          - version_already_named
+        message:
+          type: string
+        version_id:
+          type: string
+        name:
+          type: string
+      required:
+      - error_code
+      - message
+      - version_id
+      - name
+      type: object
+      additionalProperties: false
+    GetNoteVersions:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/NoteVersionMetadata'
+          type: array
+        meta:
+          properties:
+            total_pages:
+              type: number
+              format: double
+            total:
+              type: number
+              format: double
+            limit:
+              type: number
+              format: double
+            page:
+              type: number
+              format: double
+          required:
+          - total_pages
+          - total
+          - limit
+          - page
+          type: object
+      required:
+      - data
+      - meta
+      type: object
+      additionalProperties: false
+    Record_string.ApiValidationFieldError_:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/ApiValidationFieldError'
+      type: object
+      description: Construct a type with a set of properties K of type T
+    ApiServerErrorResponse:
+      anyOf:
+      - $ref: '#/components/schemas/ApiErrorResponse'
+      - $ref: '#/components/schemas/ApiRequestErrorResponse'
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
